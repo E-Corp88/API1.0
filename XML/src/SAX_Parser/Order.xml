@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Order SYSTEM "Order.dtd" >
+<Order Priority="high">
+  <OrderID>4711</OrderID>
+  <Date>11.11.2011</Date>
+  <Sender>
+    <Name>Daimler AG</Name>
+    <Address>
+      <Street>Mercedesstraße 137</Street>
+      <ZIP>70327</ZIP>
+      <City>Stuttgart</City>
+    </Address>
+  </Sender>
+  <Receiver>
+    <Name>Robert Bosch GmbH</Name>
+    <Address>
+      <Street>Robert-Bosch-Platz 1</Street>
+      <ZIP>70839</ZIP>
+      <City>Gerlingen</City>
+    </Address>
+  </Receiver>
+  <Productlist>
+    <Product>
+      <Productname>Zuendkerzen A111</Productname>
+      <Price>10.00</Price>
+      <Quantity>300</Quantity>
+    </Product>
+        <Product>
+      <Productname>ABS X111</Productname>
+      <Price>1000.00</Price>
+      <Quantity>50</Quantity>
+    </Product>
+  </Productlist>
+</Order>
