@@ -5,8 +5,6 @@
  */
 package javafxapplication13;
 
-import Consumer.InitSensor1;
-import Consumer.TestRun;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
