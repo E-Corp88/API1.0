@@ -36,13 +36,11 @@ public class FXMLDocumentController implements Initializable {
 
 	SensorRegister app = new CeBarRoundDataSensor();
 
-	private int counter = 0;
-	private int counter2 = 0;
-	private int counter3 = 0;
-	private int counterSensor1StartKnopf = 0;
-	private int counterSensor1StartKnopf2 = 0;
 	private int accuracy2 = 1000;
-	private boolean stopper = true;
+	private boolean buttonstop = true;
+	private boolean graphchecktemp = true;
+	private boolean graphcheckrev = true;
+	private boolean graphcheckpres = true;
 	@FXML
 	private ScrollPane scroll;
 	private Thread accuracy = new Thread(new Accuracy());
@@ -82,7 +80,7 @@ public class FXMLDocumentController implements Initializable {
 
 		sensor = new InitSensor1(this);
 		sensor.listen();
-		
+
 		Sensor1ID.setText("Sensor ID: ");
 		Sensor1TYPNR.setText("Sensor TypNr: ");
 
@@ -181,34 +179,31 @@ public class FXMLDocumentController implements Initializable {
 
 		// ((NumberAxis<String>)Sensor1Temp.getXAxis()).setAutoRanging(false);
 
-		if (counterSensor1StartKnopf % 2 == 0) {
-			stopper = true;
+		if (buttonstop) {
+			buttonstop = false;
 			sensor1StartKnopf.setText("Stop");
 
 			// receiving data
 			sensor.startMeasure();
-			
 
-		}
-		if (counterSensor1StartKnopf % 2 != 0) {
+		} else if (!buttonstop) {
 			sensor1StartKnopf.setText("Start");
 			// Not receiving data anymore
 			sensor.stopMeasure();
-			stopper = false;
+			buttonstop = true;
 		}
-		counterSensor1StartKnopf++;
 	}
 
 	@FXML
 	private void handleButtonAction2Sensor1(ActionEvent event) {
 
-		if (counterSensor1StartKnopf2 % 2 == 0) {
+		if (buttonstop) {
 			sensor1StartKnopf2.setText("Stop");
-		}
-		if (counterSensor1StartKnopf2 % 2 != 0) {
+			buttonstop = false;
+		} else if (!buttonstop) {
 			sensor1StartKnopf2.setText("Start");
+			buttonstop = true;
 		}
-		counterSensor1StartKnopf2++;
 	}
 
 	@FXML
@@ -243,48 +238,48 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void cbTemperatur(ActionEvent event) {
-		if (counter % 2 == 0) {
+		if (graphchecktemp) {
 			Sensor1Temp.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
+			graphchecktemp = false;
 
-		}
-		if (counter % 2 != 0) {
+		} else if (!graphchecktemp) {
 			Sensor1Temp.setVisible(true);
 			Sensor1Pre.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
+			graphchecktemp = true;
 		}
-		counter++;
 	}
 
 	@FXML
 	private void cbDruck(ActionEvent event) {
-		if (counter2 % 2 == 0) {
+		if (graphcheckpres) {
 			Sensor1Pre.setVisible(false);
 			Sensor1Temp.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
-		}
-		if (counter2 % 2 != 0) {
+			graphcheckpres = false;
+		} else if (!graphcheckpres) {
 			Sensor1Pre.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
+			graphcheckpres = true;
 		}
-		counter2++;
 	}
 
 	@FXML
 	private void cbUmdrehung(ActionEvent event) {
-		if (counter3 % 2 == 0) {
+		if (graphcheckrev) {
 			Sensor1Re.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Temp.setPrefHeight(327);
-		}
-		if (counter3 % 2 != 0) {
+			graphcheckrev = false;
+		} else if (!graphcheckrev) {
 			Sensor1Re.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Pre.setPrefHeight(218);
+			graphcheckrev = true;
 		}
-		counter3++;
 	}
 
 }
