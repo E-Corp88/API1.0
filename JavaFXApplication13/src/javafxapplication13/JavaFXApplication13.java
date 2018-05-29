@@ -5,6 +5,8 @@
  */
 package javafxapplication13;
 
+import Consumer.InitSensor1;
+import Consumer.TestRun;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -18,29 +20,32 @@ import javafx.stage.WindowEvent;
  * @author User
  */
 public class JavaFXApplication13 extends Application {
-    
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
-            @Override
-            public void handle(WindowEvent event) {
-               System.exit(0);
-            }
-        
-        
-        });
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
+	@Override
+	public void start(Stage stage) throws Exception {
+		Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+
+		Scene scene = new Scene(root);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				System.exit(0);
+			}
+
+		});
+		stage.setScene(scene);
+		stage.show();
+
+	}
+
+	/**
+	 * @param args
+	 *            the command line arguments
+	 */
+	public static void main(String[] args) {
+
+		launch(args);
+
+	}
+
 }

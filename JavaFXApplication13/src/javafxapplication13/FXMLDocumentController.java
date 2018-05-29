@@ -6,6 +6,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+import Consumer.InitSensor1;
+import Consumer.TestRun;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -27,7 +30,12 @@ import javafx.scene.control.TextField;
  * @author User
  */
 public class FXMLDocumentController implements Initializable {
-
+	
+	//Adding the DATA of the API
+	InitSensor1 sensor = new InitSensor1();
+	
+	
+	
     private int counter = 0;
     private int counter2 = 0;
     private int counter3 = 0;
@@ -156,10 +164,19 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleButtonActionSensor1(ActionEvent event) {
+    	
+    	
+    	
+    	
 
         if (counterSensor1StartKnopf % 2 == 0) {
             stopper = true;
             sensor1StartKnopf.setText("Stop");
+            
+            //receiving data
+            sensor.startMeasure();
+            sensor.listen();
+            
             Service<String> service = new Service<String>() {
                 @Override
                 protected Task<String> createTask() {
@@ -174,7 +191,7 @@ public class FXMLDocumentController implements Initializable {
                                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
                                 Timestamp time = new Timestamp(System.currentTimeMillis());
                                 String StringTime = sdf.format(time);
-                                ser.getData().add(new XYChart.Data(StringTime, (int) (Math.random() * 100)));
+                                ser.getData().add(new XYChart.Data(StringTime, 5.754664));
                                 ser2.getData().add(new XYChart.Data(StringTime, (int) (Math.random() * 100)));
                                 ser3.getData().add(new XYChart.Data(StringTime, (int) (Math.random() * 100)));
                                 slider.setMax(2000 + x);
@@ -194,6 +211,8 @@ public class FXMLDocumentController implements Initializable {
         }
         if (counterSensor1StartKnopf % 2 != 0) {
             sensor1StartKnopf.setText("Start");
+            //Not receiving data anymore
+            sensor.stopMeasure();
             stopper = false;
         }
         counterSensor1StartKnopf++;
