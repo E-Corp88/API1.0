@@ -67,7 +67,7 @@
                            <content>
                               <VBox prefHeight="709.0" prefWidth="1584.0">
                                  <children>
-                                    <LineChart fx:id="Sensor1Temp" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1627.0">
+                                    <LineChart fx:id="Sensor1Temp" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0">
                                       <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                       </xAxis>
