@@ -8,19 +8,15 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import Consumer.InitSensor1;
-import Consumer.TestRun;
 import de.hft.wiinf.cebarround.CeBarRoundDataSensor;
 import de.hft.wiinf.cebarround.SensorRegister;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -40,13 +36,11 @@ public class FXMLDocumentController implements Initializable {
 
 	SensorRegister app = new CeBarRoundDataSensor();
 
-	private int counter = 0;
-	private int counter2 = 0;
-	private int counter3 = 0;
-	private int counterSensor1StartKnopf = 0;
-	private int counterSensor1StartKnopf2 = 0;
 	private int accuracy2 = 1000;
-	private boolean stopper = true;
+	private boolean buttonstop = true;
+	private boolean graphtemp = true;
+	private boolean graphrev = true;
+	private boolean graphpres = true;
 	@FXML
 	private ScrollPane scroll;
 	private Thread accuracy = new Thread(new Accuracy());
@@ -86,7 +80,7 @@ public class FXMLDocumentController implements Initializable {
 
 		sensor = new InitSensor1(this);
 		sensor.listen();
-		
+
 		Sensor1ID.setText("Sensor ID: ");
 		Sensor1TYPNR.setText("Sensor TypNr: ");
 
@@ -185,34 +179,31 @@ public class FXMLDocumentController implements Initializable {
 
 		// ((NumberAxis<String>)Sensor1Temp.getXAxis()).setAutoRanging(false);
 
-		if (counterSensor1StartKnopf % 2 == 0) {
-			stopper = true;
+		if (buttonstop) {
+			buttonstop = false;
 			sensor1StartKnopf.setText("Stop");
 
 			// receiving data
 			sensor.startMeasure();
-			
 
-		}
-		if (counterSensor1StartKnopf % 2 != 0) {
+		} else if (!buttonstop) {
 			sensor1StartKnopf.setText("Start");
 			// Not receiving data anymore
 			sensor.stopMeasure();
-			stopper = false;
+			buttonstop = true;
 		}
-		counterSensor1StartKnopf++;
 	}
 
 	@FXML
 	private void handleButtonAction2Sensor1(ActionEvent event) {
 
-		if (counterSensor1StartKnopf2 % 2 == 0) {
+		if (buttonstop) {
 			sensor1StartKnopf2.setText("Stop");
-		}
-		if (counterSensor1StartKnopf2 % 2 != 0) {
+			buttonstop = false;
+		} else if (!buttonstop) {
 			sensor1StartKnopf2.setText("Start");
+			buttonstop = true;
 		}
-		counterSensor1StartKnopf2++;
 	}
 
 	@FXML
@@ -247,48 +238,48 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void cbTemperatur(ActionEvent event) {
-		if (counter % 2 == 0) {
+		if (graphtemp) {
 			Sensor1Temp.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
+			graphtemp = false;
 
-		}
-		if (counter % 2 != 0) {
+		} else if (!graphtemp) {
 			Sensor1Temp.setVisible(true);
 			Sensor1Pre.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
+			graphtemp = true;
 		}
-		counter++;
 	}
 
 	@FXML
 	private void cbDruck(ActionEvent event) {
-		if (counter2 % 2 == 0) {
+		if (graphpres) {
 			Sensor1Pre.setVisible(false);
 			Sensor1Temp.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
-		}
-		if (counter2 % 2 != 0) {
+			graphpres = false;
+		} else if (!graphpres) {
 			Sensor1Pre.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
+			graphpres = true;
 		}
-		counter2++;
 	}
 
 	@FXML
 	private void cbUmdrehung(ActionEvent event) {
-		if (counter3 % 2 == 0) {
+		if (graphrev) {
 			Sensor1Re.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Temp.setPrefHeight(327);
-		}
-		if (counter3 % 2 != 0) {
+			graphrev = false;
+		} else if (!graphrev) {
 			Sensor1Re.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Pre.setPrefHeight(218);
+			graphrev = true;
 		}
-		counter3++;
 	}
 
 }

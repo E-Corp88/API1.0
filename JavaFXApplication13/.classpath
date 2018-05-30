@@ -14,5 +14,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/JavaFXApplication13/lib/cebarround-1.3.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/derby.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
