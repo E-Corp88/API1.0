@@ -17,7 +17,7 @@ import javafx.stage.WindowEvent;
  *
  * @author User
  */
-public class JavaFXApplication13 extends Application {
+public class Run extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
