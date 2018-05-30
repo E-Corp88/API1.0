@@ -38,9 +38,9 @@ public class FXMLDocumentController implements Initializable {
 
 	private int accuracy2 = 1000;
 	private boolean buttonstop = true;
-	private boolean graphchecktemp = true;
-	private boolean graphcheckrev = true;
-	private boolean graphcheckpres = true;
+	private boolean graphtemp = true;
+	private boolean graphrev = true;
+	private boolean graphpres = true;
 	@FXML
 	private ScrollPane scroll;
 	private Thread accuracy = new Thread(new Accuracy());
@@ -238,47 +238,47 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void cbTemperatur(ActionEvent event) {
-		if (graphchecktemp) {
+		if (graphtemp) {
 			Sensor1Temp.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
-			graphchecktemp = false;
+			graphtemp = false;
 
-		} else if (!graphchecktemp) {
+		} else if (!graphtemp) {
 			Sensor1Temp.setVisible(true);
 			Sensor1Pre.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
-			graphchecktemp = true;
+			graphtemp = true;
 		}
 	}
 
 	@FXML
 	private void cbDruck(ActionEvent event) {
-		if (graphcheckpres) {
+		if (graphpres) {
 			Sensor1Pre.setVisible(false);
 			Sensor1Temp.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
-			graphcheckpres = false;
-		} else if (!graphcheckpres) {
+			graphpres = false;
+		} else if (!graphpres) {
 			Sensor1Pre.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
-			graphcheckpres = true;
+			graphpres = true;
 		}
 	}
 
 	@FXML
 	private void cbUmdrehung(ActionEvent event) {
-		if (graphcheckrev) {
+		if (graphrev) {
 			Sensor1Re.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Temp.setPrefHeight(327);
-			graphcheckrev = false;
-		} else if (!graphcheckrev) {
+			graphrev = false;
+		} else if (!graphrev) {
 			Sensor1Re.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Pre.setPrefHeight(218);
-			graphcheckrev = true;
+			graphrev = true;
 		}
 	}
 
