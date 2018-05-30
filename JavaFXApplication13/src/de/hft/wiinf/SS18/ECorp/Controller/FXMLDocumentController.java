@@ -35,6 +35,7 @@ public class FXMLDocumentController implements Initializable {
 
 	SensorRegister app = new CeBarRoundDataSensor();
 
+	@SuppressWarnings("unused")
 	private int accuracy2 = 1000;
 	private boolean buttonstop = true;
 	private boolean graphtemp = true;
