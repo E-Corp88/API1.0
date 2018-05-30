@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="849.0" prefWidth="1810.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication13.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="849.0" prefWidth="1810.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hft.wiinf.SS18.ECorp.Controller.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TabPane layoutX="-7.0" layoutY="69.0" prefHeight="737.0" prefWidth="1810.0" tabClosingPolicy="UNAVAILABLE">

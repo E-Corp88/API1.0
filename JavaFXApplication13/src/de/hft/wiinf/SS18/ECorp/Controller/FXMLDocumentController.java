@@ -24,7 +24,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-
 /**
  *
  * @author User
@@ -102,9 +101,10 @@ public class FXMLDocumentController implements Initializable {
 		Sensor1Re.getData().add(ser3);
 		Sensor1Re.setAnimated(false);
 		
+		
 		valueOfSlider.setText(String.valueOf(slider.getValue()));
-		//slider.setValue(Double.parseDouble(valueOfSlider.getText()));
 		slider.valueProperty().addListener(new ChangeListener() {
+
 			@Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
 				valueOfSlider.textProperty().setValue(String.valueOf((int) slider.getValue()));
@@ -113,6 +113,7 @@ public class FXMLDocumentController implements Initializable {
 		});
 		
 		acSlider.valueProperty().addListener(new ChangeListener() {
+
 			@Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
 				accuracy2 = (int) acSlider.getValue();
@@ -130,10 +131,10 @@ public class FXMLDocumentController implements Initializable {
 		});
 
 		accuracy.start();
-		
+
 	}
 
-	class Accuracy implements Runnable {
+	public class Accuracy implements Runnable {
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override

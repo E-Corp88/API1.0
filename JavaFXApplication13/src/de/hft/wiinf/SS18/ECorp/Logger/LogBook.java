@@ -11,6 +11,7 @@ import static java.util.logging.Level.ALL;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import de.hft.wiinf.SS18.ECorp.Logger.LogBook;
 
 public class LogBook {
 // Erzeuge Objekt um ein Logbuch zu formatieren
