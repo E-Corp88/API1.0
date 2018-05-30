@@ -33,32 +33,33 @@
                            <children>
                               <Label text="Daten anzeigen:" />
                               <Button fx:id="sensor1StartKnopf" mnemonicParsing="false" onAction="#handleButtonActionSensor1" prefHeight="25.0" prefWidth="140.0" text="Start" />
-                              <Label text="Datem aufnehmen:" />
+                              <Label text="Daten aufnehmen:" />
                               <Button fx:id="sensor1StartKnopf2" mnemonicParsing="false" onAction="#handleButtonAction2Sensor1" prefHeight="25.0" prefWidth="139.0" text="Start" />
                               <VBox prefHeight="200.0" prefWidth="205.0">
                                  <children>
-                                    <CheckBox fx:id="cbTemperatur" mnemonicParsing="false" onAction="#cbTemperatur" text="Temperatur" />
-                                    <CheckBox fx:id="cbDruck" mnemonicParsing="false" onAction="#cbDruck" text="Druck" />
-                                    <CheckBox fx:id="cbUmdrehung" mnemonicParsing="false" onAction="#cbUmdrehung" text="Umdrehung" />
+                                    <CheckBox fx:id="cbTemperatur" mnemonicParsing="false" onAction="#cbTemperatur" text="Temperatur (&#x00B0;C)" />
+                                    <CheckBox fx:id="cbDruck" mnemonicParsing="false" onAction="#cbDruck" text="Druck (bar)" />
+                                    <CheckBox fx:id="cbUmdrehung" mnemonicParsing="false" onAction="#cbUmdrehung" text="Umdrehung (U/min)" />
                                     <Label text="Skalierung" />
                                     <Slider fx:id="slider" max="2000.0" value="1378" />
                                     <TextField fx:id="valueOfSlider" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="76.0" />
+                                    <Label text= "Intervall (ms)" />
                                     <Slider fx:id="acSlider" max="3000.0" min="500.0" value="1000.0" />
                                     <TextField fx:id="valueOfSlider1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="76.0" />
                                  </children>
                               </VBox>
                            </children>
                         </VBox>
-                        <VBox layoutX="4.0" layoutY="451.0" prefHeight="259.0" prefWidth="345.0">
+                        <VBox layoutX="10.0" layoutY="380.0" prefHeight="259.0" prefWidth="345.0">
                            <children>
-                              <Label fx:id="Sensor1ID" prefHeight="57.0" prefWidth="269.0" text="">
+                              <Label fx:id="Sensor1ID" prefHeight="10.00" prefWidth="400" text="">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="Sensor1TYPNR" prefHeight="100.0" prefWidth="367.0" text="">
+                              <Label fx:id="Sensor1TYPNR" prefHeight="10.0" prefWidth="400" text="">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="16.0" />
                                  </font>
                               </Label>
                            </children>
