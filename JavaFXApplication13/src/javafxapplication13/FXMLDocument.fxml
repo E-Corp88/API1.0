@@ -41,9 +41,9 @@
                                     <CheckBox fx:id="cbDruck" mnemonicParsing="false" onAction="#cbDruck" text="Druck" />
                                     <CheckBox fx:id="cbUmdrehung" mnemonicParsing="false" onAction="#cbUmdrehung" text="Umdrehung" />
                                     <Label text="Skalierung" />
-                                    <Slider fx:id="slider" max="2000.0" />
+                                    <Slider fx:id="slider" max="2000.0" value="1378" />
                                     <TextField fx:id="valueOfSlider" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="76.0" />
-                                    <Slider fx:id="acSlider" max="2000.0" min="100.0" value="1000.0" />
+                                    <Slider fx:id="acSlider" max="3000.0" min="500.0" value="1000.0" />
                                     <TextField fx:id="valueOfSlider1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="76.0" />
                                  </children>
                               </VBox>

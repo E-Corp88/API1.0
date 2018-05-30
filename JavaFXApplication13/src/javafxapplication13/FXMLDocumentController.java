@@ -75,6 +75,7 @@ public class FXMLDocumentController implements Initializable {
 	private Button sensor1StartKnopf2;
 	private XYChart.Series<String, Number> ser, ser2, ser3;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -87,15 +88,7 @@ public class FXMLDocumentController implements Initializable {
 		cbTemperatur.setSelected(true);
 		cbDruck.setSelected(true);
 		cbUmdrehung.setSelected(true);
-		valueOfSlider.setText(String.valueOf(slider.getValue()));
-		slider.valueProperty().addListener(new ChangeListener() {
-
-			@Override
-			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				valueOfSlider.textProperty().setValue(String.valueOf((int) slider.getValue()));
-
-			}
-		});
+		
 		ser = new XYChart.Series<>();
 		ser.setName("Temperatur");
 		ser2 = new XYChart.Series<>();
@@ -108,12 +101,23 @@ public class FXMLDocumentController implements Initializable {
 		Sensor1Pre.setAnimated(false);
 		Sensor1Re.getData().add(ser3);
 		Sensor1Re.setAnimated(false);
+		
+		
+		valueOfSlider.setText(String.valueOf(slider.getValue()));
+		slider.valueProperty().addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				valueOfSlider.textProperty().setValue(String.valueOf((int) slider.getValue()));
+				
+			}
+		});
+		
 		acSlider.valueProperty().addListener(new ChangeListener() {
 
 			@Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
 				accuracy2 = (int) acSlider.getValue();
-
 			}
 		});
 		valueOfSlider1.setText(String.valueOf(acSlider.getValue()));
@@ -121,8 +125,9 @@ public class FXMLDocumentController implements Initializable {
 
 			@Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-
 				valueOfSlider1.textProperty().setValue(String.valueOf((int) acSlider.getValue()));
+				sensor.setVerbosity(acSlider.getValue());
+				
 			}
 		});
 
@@ -132,6 +137,7 @@ public class FXMLDocumentController implements Initializable {
 
 	class Accuracy implements Runnable {
 
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public void run() {
 			slider.valueProperty().addListener(new ChangeListener() {
@@ -148,6 +154,7 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void dataChanged() {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
@@ -220,19 +227,19 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void graphicListen(ActionEvent event) {
-		log.info("graphics gedrückt");
+		log.info("graphics gedrueckt");
 
 	}
 
 	@FXML
 	private void tableListen(ActionEvent event) {
-		log.info("table gedruückt");
+		log.info("table gedrueckt");
 
 	}
 
 	@FXML
 	private void dataArchivesListen(ActionEvent event) {
-		log.info("dataArchive gedrückt");
+		log.info("dataArchive gedrueckt");
 
 	}
 
