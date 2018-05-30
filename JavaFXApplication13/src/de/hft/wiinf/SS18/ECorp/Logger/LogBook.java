@@ -1,4 +1,4 @@
-package javafxapplication13;
+package de.hft.wiinf.SS18.ECorp.Logger;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import static java.util.logging.Level.ALL;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
 
 public class LogBook {
 // Erzeuge Objekt um ein Logbuch zu formatieren

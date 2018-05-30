@@ -1,4 +1,4 @@
-package Consumer;
+package de.hft.wiinf.SS18.ECorp.Consumer;
 
 import de.hft.wiinf.cebarround.CeBarRoundDataSensorV2;
 import de.hft.wiinf.cebarround.CeBarRoundObserver;

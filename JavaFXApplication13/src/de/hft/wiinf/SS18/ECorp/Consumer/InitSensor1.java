@@ -1,14 +1,14 @@
-package Consumer;
+package de.hft.wiinf.SS18.ECorp.Consumer;
 
 import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import de.hft.wiinf.SS18.ECorp.Controller.FXMLDocumentController;
 import de.hft.wiinf.cebarround.CeBarRoundDataSensor;
 import de.hft.wiinf.cebarround.CeBarRoundObserver;
 import de.hft.wiinf.cebarround.SensorEvent;
 import de.hft.wiinf.cebarround.SensorRegister;
-import javafxapplication13.FXMLDocumentController;
 
 public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 
