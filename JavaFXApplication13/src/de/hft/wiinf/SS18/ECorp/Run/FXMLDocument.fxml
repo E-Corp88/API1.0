@@ -41,7 +41,7 @@
                                     <CheckBox fx:id="cbDruck" mnemonicParsing="false" onAction="#cbDruck" text="Druck (bar)" />
                                     <CheckBox fx:id="cbUmdrehung" mnemonicParsing="false" onAction="#cbUmdrehung" text="Umdrehung (U/min)" />
                                     <Label text="Skalierung" />
-                                    <Slider fx:id="slider" max="2000.0" value="1378" />
+                                    <Slider fx:id="slider" max="2000.0" value="1000" />
                                     <TextField fx:id="valueOfSlider" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="76.0" />
                                     <Label text= "Intervall (ms)" />
                                     <Slider fx:id="acSlider" max="3000.0" min="500.0" value="1000.0" />
@@ -68,7 +68,12 @@
                            <content>
                               <VBox prefHeight="709.0" prefWidth="1584.0">
                                  <children>
-                                    <LineChart fx:id="Sensor1Temp" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0">
+                                	<Label fx:id="labeltempchart" prefHeight="10.0" prefWidth="400" text="Temperatur (&#x00B0;C)">
+                                 		<font>
+                                   			<Font size="16.0" />
+                                 		</font>
+                              		</Label>
+                                    <LineChart fx:id="Sensor1Temp" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1000">
                                       <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                       </xAxis>
@@ -76,7 +81,12 @@
                                         <NumberAxis side="LEFT" />
                                       </yAxis>
                                     </LineChart>
-                                    <LineChart fx:id="Sensor1Pre" createSymbols="false" focusTraversable="true" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0">
+                                    <Label fx:id="labelpreschart" prefHeight="10.0" prefWidth="400" text="Druck (bar)">
+                                 		<font>
+                                   			<Font size="16.0" />
+                                 		</font>
+                              		</Label>
+                                    <LineChart fx:id="Sensor1Pre" createSymbols="false" focusTraversable="true" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1000">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -87,7 +97,12 @@
                                           <ColorAdjust />
                                        </effect>
                                     </LineChart>
-                                    <LineChart fx:id="Sensor1Re" createSymbols="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0">
+                                    <Label fx:id="labelrevchart" prefHeight="10.0" prefWidth="400" text="Umdrehung (U/min)">
+                                 		<font>
+                                   			<Font size="16.0" />
+                                 		</font>
+                              		</Label>
+                                    <LineChart fx:id="Sensor1Re" createSymbols="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1000">
                                        <xAxis>
                                           <CategoryAxis side="BOTTOM" />
                                        </xAxis>
@@ -111,7 +126,7 @@
                            <children>
                               <Label text="Daten anzeigen:" />
                               <Button mnemonicParsing="false" onAction="#handleButtonActionSensor2" prefHeight="25.0" prefWidth="140.0" text="Start/Stop" />
-                              <Label text="Datem aufnehmen:" />
+                              <Label text="Daten aufnehmen:" />
                               <Button mnemonicParsing="false" onAction="#handleButtonAction2Sensor2" prefHeight="25.0" prefWidth="139.0" text="Start/Stop" />
                            </children>
                         </VBox>
