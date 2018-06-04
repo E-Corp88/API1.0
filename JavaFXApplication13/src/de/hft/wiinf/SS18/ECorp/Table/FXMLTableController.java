@@ -31,7 +31,7 @@ public class FXMLTableController implements Initializable {
     Label sensorTypNr;
     @FXML
     private TableView table;
-    private FXMLTableController TableCon;
+	private FXMLTableController TableCon;
 
     private final ObservableList<Value> data
             = FXCollections.observableArrayList();
