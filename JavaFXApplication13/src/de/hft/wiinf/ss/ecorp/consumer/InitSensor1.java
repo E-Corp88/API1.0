@@ -14,64 +14,69 @@ import de.hft.wiinf.ss.ecorp.table.FXMLTableController;
 import java.util.logging.Logger;
 
 public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
-    private Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private Executor dataex = Executors.newSingleThreadExecutor();
+	private Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private Executor dataex = Executors.newSingleThreadExecutor();
+	private Executor dataex2 = Executors.newSingleThreadExecutor();
 
-    SensorRegister app = new CeBarRoundDataSensor();
+	SensorRegister app = new CeBarRoundDataSensor();
 
-    public double temp = 0;
-    public double pressure = 0;
-    public int rev = 0;
-    public Date date;
-    public String typecode = "";
-    public long id = 0;
-    public FXMLDocumentController ctrl;
-    public FXMLTableController tableCtrl;
+	public double temp = 0;
+	public double pressure = 0;
+	public int rev = 0;
+	public Date date;
+	public String typecode = "";
+	public long id = 0;
 
-    public InitSensor1(FXMLDocumentController ctrl) {
-        this.ctrl = ctrl;
-    }
+	public FXMLDocumentController ctrl;
+	public FXMLTableController tableCtrl;
 
-    public InitSensor1(FXMLTableController tableCtrl) {
-        this.tableCtrl = tableCtrl;
-    }
+	public InitSensor1(FXMLDocumentController ctrl) {
+		this.ctrl = ctrl;
+	}
 
-    public void listen() {
+	public InitSensor1(FXMLTableController tableCtrl) {
+		this.tableCtrl = tableCtrl;
+	}
 
-        app.addListener(this);
-    }
+	public void listen() {
 
-    public void startMeasure() {
-        app.startMeasure();
-    }
+		app.addListener(this);
+	}
 
-    public void stopMeasure() {
-        app.stopMeasure();
-    }
+	public void startMeasure() {
+		app.startMeasure();
+	}
 
-    public void setVerbosity(double t) {
-        app.setVerbosity(t);
-    }
+	public void stopMeasure() {
+		app.stopMeasure();
+	}
 
-    public void getVerbosity() {
-        System.out.println(app.getVebosity());
-    }
+	public void setVerbosity(double t) {
+		app.setVerbosity(t);
+	}
 
-    @Override
-    public void sensorDataEventListener(SensorEvent event) {
-        dataex.execute(() -> {
-            temp = event.getTemperature();
-            pressure = event.getPressure();
-            rev = event.getRevolutions();
-            date = event.getDate();
-            typecode = event.getSensorTypeCode();
-            id = event.getUniqueSensorIdentifier();
-            ctrl.dataChanged();   
-            
-            tableCtrl.dataChangedTable();
-            
-        });
+	@Override
+	public void sensorDataEventListener(SensorEvent event) {
+		dataex.execute(() -> {
+			temp = event.getTemperature();
+			pressure = event.getPressure();
+			rev = event.getRevolutions();
+			date = event.getDate();
+			typecode = event.getSensorTypeCode();
+			id = event.getUniqueSensorIdentifier();
+			ctrl.dataChanged();
+		});
 
-    }
+		dataex2.execute(() -> {
+			temp = event.getTemperature();
+			pressure = event.getPressure();
+			rev = event.getRevolutions();
+			date = event.getDate();
+			typecode = event.getSensorTypeCode();
+			id = event.getUniqueSensorIdentifier();
+			tableCtrl.dataChangedTable();
+		});
+
+	}
 
 }

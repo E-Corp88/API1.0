@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import de.hft.wiinf.cebarround.CeBarRoundDataSensor;
 import de.hft.wiinf.cebarround.SensorRegister;
 import de.hft.wiinf.ss.ecorp.consumer.InitSensor1;
+import de.hft.wiinf.ss.ecorp.table.FXMLTableController;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -44,15 +45,20 @@ public class FXMLDocumentController implements Initializable {
 	// Adding the DATA of the API
 	InitSensor1 sensor;
 	SensorRegister app = new CeBarRoundDataSensor();
+
 	@SuppressWarnings("unused")
 	private int accuracy2 = 1000;
+
 	Stage newWindow = new Stage();
 	Stage newWindow2 = new Stage();
+
 	private boolean buttonstop = true;
 	private boolean graphtemp = true;
 	private boolean graphrev = true;
 	private boolean graphpres = true;
+
 	private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	@FXML
 	private Label Sensor1ID;
 	@FXML
@@ -356,6 +362,7 @@ public class FXMLDocumentController implements Initializable {
 	private void openTableHandle(ActionEvent event) {
 
 		newWindow.show();
+
 	}
 
 	@FXML

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="529.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hft.wiinf.SS18.ECorp.DataArchive.FXMLArchiveController">
+<AnchorPane id="AnchorPane" prefHeight="529.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hft.wiinf.ss.ecorp.data_archive.FXMLArchiveController">
    <children>
       <ListView layoutX="36.0" layoutY="34.0" prefHeight="574.0" prefWidth="254.0" />
       <Button layoutX="304.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Speichern" />
