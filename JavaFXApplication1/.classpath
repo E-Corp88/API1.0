@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="dist/JavaFXApplication13.jar"/>
+	<classpathentry kind="lib" path="dist/lib/cebarround-1.3.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/JavaFXApplication13/lib/cebarround-1.3.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/cebarround-1.3.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/cebarround-1.3.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/JavaFXApplication13/lib/cebarround-1.3.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/derby.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
