@@ -3,12 +3,16 @@ package de.hft.wiinf.ss.ecorp.controller;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import de.hft.wiinf.cebarround.CeBarRoundDataSensor;
+import de.hft.wiinf.cebarround.SensorEvent;
 import de.hft.wiinf.cebarround.SensorRegister;
 import de.hft.wiinf.ss.ecorp.consumer.InitSensor1;
+import de.hft.wiinf.ss.ecorp.db.DB;
+import de.hft.wiinf.ss.ecorp.event.EventDTO;
 import de.hft.wiinf.ss.ecorp.table.FXMLTableController;
 
 import java.io.IOException;
@@ -44,7 +48,7 @@ public class FXMLDocumentController implements Initializable {
 
 	// Adding the DATA of the API
 	InitSensor1 sensor;
-	SensorRegister app = new CeBarRoundDataSensor();
+	DB db = new DB();
 
 	@SuppressWarnings("unused")
 	private int accuracy2 = 1000;
@@ -53,9 +57,13 @@ public class FXMLDocumentController implements Initializable {
 	Stage newWindow2 = new Stage();
 
 	private boolean buttonstop = true;
+	private boolean buttonstop2 = true;
 	private boolean graphtemp = true;
 	private boolean graphrev = true;
 	private boolean graphpres = true;
+	private boolean aufnahme = false;
+
+	
 
 	private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -222,9 +230,19 @@ public class FXMLDocumentController implements Initializable {
 			ser3.getData().remove(0);
 		}
 
+		if (aufnahme) {
+			sensor.saveData(db.datalist, sensor.temp, sensor.pressure, sensor.rev, sensor.date, sensor.typecode,
+					sensor.id);
+			for (int x = 0; x < db.datalist.size(); x++) {
+				System.out.println(db.datalist.get(x));
+				
+			}
+		}
+
 		Platform.runLater(() -> {
 			Sensor1ID.setText("Sensor ID: " + sensor.id);
 			Sensor1TYPNR.setText("Sensor TypNr: " + sensor.typecode);
+
 		});
 
 	}
@@ -251,12 +269,14 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleButtonAction2Sensor1(ActionEvent event) {
 
-		if (buttonstop) {
+		if (buttonstop2) {
 			sensor1StartKnopf2.setText("Stop");
-			buttonstop = false;
-		} else if (!buttonstop) {
+			buttonstop2 = false;
+			aufnahme = true;
+		} else if (!buttonstop2) {
 			sensor1StartKnopf2.setText("Start");
-			buttonstop = true;
+			buttonstop2 = true;
+			aufnahme = false;
 		}
 	}
 

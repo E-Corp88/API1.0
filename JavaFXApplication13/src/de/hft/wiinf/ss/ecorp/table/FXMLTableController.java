@@ -37,8 +37,6 @@ public class FXMLTableController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		sensor = new InitSensor1(this);
-		sensor.listen();
 	}
 
 	public void dataChangedTable() {

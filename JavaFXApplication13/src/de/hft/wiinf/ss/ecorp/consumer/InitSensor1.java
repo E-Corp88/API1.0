@@ -1,5 +1,6 @@
 package de.hft.wiinf.ss.ecorp.consumer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -9,6 +10,7 @@ import de.hft.wiinf.cebarround.CeBarRoundObserver;
 import de.hft.wiinf.cebarround.SensorEvent;
 import de.hft.wiinf.cebarround.SensorRegister;
 import de.hft.wiinf.ss.ecorp.controller.FXMLDocumentController;
+import de.hft.wiinf.ss.ecorp.event.EventDTO;
 import de.hft.wiinf.ss.ecorp.table.FXMLTableController;
 
 import java.util.logging.Logger;
@@ -16,7 +18,6 @@ import java.util.logging.Logger;
 public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 	private Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private Executor dataex = Executors.newSingleThreadExecutor();
-	private Executor dataex2 = Executors.newSingleThreadExecutor();
 
 	SensorRegister app = new CeBarRoundDataSensor();
 
@@ -27,15 +28,12 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 	public String typecode = "";
 	public long id = 0;
 
+
 	public FXMLDocumentController ctrl;
-	public FXMLTableController tableCtrl = new FXMLTableController ();
+	public FXMLTableController tableCtrl;
 
 	public InitSensor1(FXMLDocumentController ctrl) {
 		this.ctrl = ctrl;
-	}
-
-	public InitSensor1(FXMLTableController tableCtrl) {
-		this.tableCtrl = tableCtrl;
 	}
 
 	public void listen() {
@@ -67,16 +65,14 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 			ctrl.dataChanged();
 		});
 
-		dataex2.execute(() -> {
-			temp = event.getTemperature();
-			pressure = event.getPressure();
-			rev = event.getRevolutions();
-			date = event.getDate();
-			typecode = event.getSensorTypeCode();
-			id = event.getUniqueSensorIdentifier();
-			tableCtrl.dataChangedTable();
-		});
+	}
 
+	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, Date date,
+			String typecode, long id) {
+		EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
+		if(datalist.size()<=1000) {
+			datalist.add(dto);
+		}
 	}
 
 }
