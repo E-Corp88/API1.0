@@ -28,7 +28,7 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 	public long id = 0;
 
 	public FXMLDocumentController ctrl;
-	public FXMLTableController tableCtrl;
+	public FXMLTableController tableCtrl = new FXMLTableController ();
 
 	public InitSensor1(FXMLDocumentController ctrl) {
 		this.ctrl = ctrl;

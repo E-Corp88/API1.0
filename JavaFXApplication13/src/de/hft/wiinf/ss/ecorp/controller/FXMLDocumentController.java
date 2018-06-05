@@ -64,12 +64,6 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Label Sensor1TYPNR;
 	@FXML
-	private Label templabel;
-	@FXML
-	private Label revlabel;
-	@FXML
-	private Label preslabel;
-	@FXML
 	private LineChart<String, Number> Sensor1Temp;
 	@FXML
 	private LineChart<String, Number> Sensor1Pre;
@@ -310,14 +304,12 @@ public class FXMLDocumentController implements Initializable {
 	private void cbTemperatur(ActionEvent event) {
 		if (graphtemp) {
 			Sensor1Temp.setVisible(false);
-			templabel.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
 			graphtemp = false;
 
 		} else if (!graphtemp) {
 			Sensor1Temp.setVisible(true);
-			templabel.setVisible(true);
 			Sensor1Pre.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
 			graphtemp = true;
@@ -328,13 +320,11 @@ public class FXMLDocumentController implements Initializable {
 	private void cbDruck(ActionEvent event) {
 		if (graphpres) {
 			Sensor1Pre.setVisible(false);
-			preslabel.setVisible(false);
 			Sensor1Temp.setPrefHeight(327);
 			Sensor1Re.setPrefHeight(327);
 			graphpres = false;
 		} else if (!graphpres) {
 			Sensor1Pre.setVisible(true);
-			preslabel.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Re.setPrefHeight(218);
 			graphpres = true;
@@ -345,13 +335,11 @@ public class FXMLDocumentController implements Initializable {
 	private void cbUmdrehung(ActionEvent event) {
 		if (graphrev) {
 			Sensor1Re.setVisible(false);
-			revlabel.setVisible(false);
 			Sensor1Pre.setPrefHeight(327);
 			Sensor1Temp.setPrefHeight(327);
 			graphrev = false;
 		} else if (!graphrev) {
 			Sensor1Re.setVisible(true);
-			revlabel.setVisible(true);
 			Sensor1Temp.setPrefHeight(218);
 			Sensor1Pre.setPrefHeight(218);
 			graphrev = true;
