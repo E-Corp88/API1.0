@@ -245,7 +245,6 @@ public class FXMLDocumentController implements Initializable {
 
 		Platform.runLater(() -> {
 			Sensor1ID.setText("Sensor ID: " + sensor.id);
-			System.out.println(sensor.id);
 			Sensor1TYPNR.setText("Sensor TypNr: " + sensor.typecode);
 		});
 
@@ -292,7 +291,6 @@ public class FXMLDocumentController implements Initializable {
 
 		Platform.runLater(() -> {
 			Sensor2ID.setText("Sensor ID: " + sensor2.id);
-			System.out.println(sensor2.id);
 			Sensor2TYPNR.setText("Sensor TypNr: " + sensor2.typecode);
 		});
 	}
