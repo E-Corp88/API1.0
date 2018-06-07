@@ -13,12 +13,14 @@ public class Value {
     public final SimpleStringProperty value1;
     public final SimpleStringProperty value2;
     public final SimpleStringProperty value3;
+    
 
     public Value(String Xtime, String Xvalue1, String Xvalue2, String Xvalue3) {
         this.time = new SimpleStringProperty(Xtime);
         this.value1 = new SimpleStringProperty(Xvalue1);
         this.value2 = new SimpleStringProperty(Xvalue2);
         this.value3 = new SimpleStringProperty(Xvalue3);
+        
     }
 
     public String getTime() {
@@ -52,5 +54,12 @@ public class Value {
     public void setValue3(String fName) {
         value3.set(fName);
     }
+
+    @Override
+    public String toString() {
+        return "Value{" + "time=" + time + ", value1=" + value1 + ", value2=" + value2 + ", value3=" + value3 + '}';
+    }
+
+   
 
 }

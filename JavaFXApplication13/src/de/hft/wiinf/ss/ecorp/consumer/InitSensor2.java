@@ -1,20 +1,42 @@
 package de.hft.wiinf.ss.ecorp.consumer;
 
-import de.hft.wiinf.cebarround.CeBarRoundDataSensorV2;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import de.hft.wiinf.cebarround.CeBarRoundDataSensor;
 import de.hft.wiinf.cebarround.CeBarRoundObserver;
 import de.hft.wiinf.cebarround.SensorEvent;
 import de.hft.wiinf.cebarround.SensorRegister;
+import de.hft.wiinf.ss.ecorp.controller.FXMLDocumentController;
+import de.hft.wiinf.ss.ecorp.event.EventDTO;
 
-final class InitSensor2 {
+import java.util.logging.Logger;
 
-	SensorRegister app = new CeBarRoundDataSensorV2();
+public class InitSensor2 implements CeBarRoundObserver<SensorEvent> {
+	
+	private Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private Executor dataex = Executors.newSingleThreadExecutor();
+
+	SensorRegister app = new CeBarRoundDataSensor();
+
+	public double temp = 0;
+	public double pressure = 0;
+	public int rev = 0;
+	public Date date;
+	public String typecode = "";
+	public long id = 0;
+
+	public FXMLDocumentController ctrl;
+
+	public InitSensor2(FXMLDocumentController ctrl) {
+		this.ctrl = ctrl;
+	}
 
 	public void listen() {
-		final CeBarRoundObserver<SensorEvent> ceBarRoundObserver = ceBarRoundEvent -> System.out
-				.println("Sensor group 2: " + ceBarRoundEvent.toString());
 
-		app.addListener(ceBarRoundObserver);
-
+		app.addListener(this);
 	}
 
 	public void startMeasure() {
@@ -29,7 +51,26 @@ final class InitSensor2 {
 		app.setVerbosity(t);
 	}
 
-	public void getVerbosity() {
-		System.out.println(app.getVebosity());
+	@Override
+	public void sensorDataEventListener(SensorEvent event) {
+		dataex.execute(() -> {
+			temp = event.getTemperature();
+			pressure = event.getPressure();
+			rev = event.getRevolutions();
+			date = event.getDate();
+			typecode = event.getSensorTypeCode();
+			id = event.getUniqueSensorIdentifier();
+			ctrl.dataChangedS2();
+		});
+
 	}
+
+	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, Date date,
+			String typecode, long id) {
+		EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
+		if (datalist.size() <= 1000) {
+			datalist.add(dto);
+		}
+	}
+
 }

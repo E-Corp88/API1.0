@@ -11,7 +11,6 @@ import de.hft.wiinf.cebarround.SensorEvent;
 import de.hft.wiinf.cebarround.SensorRegister;
 import de.hft.wiinf.ss.ecorp.controller.FXMLDocumentController;
 import de.hft.wiinf.ss.ecorp.event.EventDTO;
-import de.hft.wiinf.ss.ecorp.table.FXMLTableController;
 
 import java.util.logging.Logger;
 
@@ -28,9 +27,7 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 	public String typecode = "";
 	public long id = 0;
 
-
 	public FXMLDocumentController ctrl;
-	public FXMLTableController tableCtrl;
 
 	public InitSensor1(FXMLDocumentController ctrl) {
 		this.ctrl = ctrl;
@@ -62,7 +59,7 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 			date = event.getDate();
 			typecode = event.getSensorTypeCode();
 			id = event.getUniqueSensorIdentifier();
-			ctrl.dataChanged();
+			ctrl.dataChangedS1();
 		});
 
 	}
@@ -70,7 +67,7 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, Date date,
 			String typecode, long id) {
 		EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
-		if(datalist.size()<=1000) {
+		if (datalist.size() <= 1000) {
 			datalist.add(dto);
 		}
 	}
