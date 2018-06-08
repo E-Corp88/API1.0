@@ -15,7 +15,7 @@ import de.hft.wiinf.ss.ecorp.event.EventDTO;
 import java.util.logging.Logger;
 
 public class InitSensor2 implements CeBarRoundObserver<SensorEvent> {
-	
+
 	private Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private Executor dataex = Executors.newSingleThreadExecutor();
 

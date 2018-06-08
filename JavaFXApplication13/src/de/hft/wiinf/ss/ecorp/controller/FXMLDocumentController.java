@@ -65,18 +65,19 @@ public class FXMLDocumentController implements Initializable {
 	private boolean buttonstop2 = true;
 	private boolean buttonstop3 = true;
 	private boolean buttonstop4 = true;
-	private boolean aufnahme = true;
+	private boolean aufnahmeS1 = true;
+	private boolean aufnahmeS2 = true;
 	private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	@FXML
 	private VBox vbox2;
 	@FXML
-	private Label Sensor1ID;
+	private Label sensor1ID;
 	@FXML
-	private Label Sensor1TYPNR;
+	private Label sensor1TYPNR;
 	@FXML
-	private Label Sensor2ID;
+	private Label sensor2ID;
 	@FXML
-	private Label Sensor2TYPNR;
+	private Label sensor2TYPNR;
 	@FXML
 	private LineChart<String, Number> Sensor1Temp;
 	@FXML
@@ -96,27 +97,27 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private CheckBox cbUmdrehung;
 	@FXML
-	private CheckBox Sensor2cbTemperatur;
+	private CheckBox cbTemperaturSensor2;
 	@FXML
-	private CheckBox Sensor2cbDruck;
+	private CheckBox cbDruckSensor2;
 	@FXML
-	private CheckBox Sensor2cbUmdrehung;
+	private CheckBox cbUmdrehungSensor2;
 	@FXML
-	private Slider slider;
+	private Slider zoomSliderSens1;
 	@FXML
-	private Slider acSlider;
+	private Slider acSliderSens1;
 	@FXML
-	private Slider Sensor2Slider1;
+	private Slider zoomSliderSens2;
 	@FXML
-	private Slider Sensor2acSlider2;
+	private Slider acSliderSens2;
 	@FXML
-	private TextField valueOfSlider;
+	private TextField valueOfzoomSliderSens1;
 	@FXML
-	private TextField valueOfSlider1;
+	private TextField valueOfacSliderSens1;
 	@FXML
-	private TextField Sensor2valueOfSlider1;
+	private TextField valueOfzoomSliderSens2;
 	@FXML
-	private TextField Sensor2valueofSlider2;
+	private TextField valueOfacSliderSens2;
 	@FXML
 	private Button sensor1StartKnopf;
 	@FXML
@@ -134,14 +135,21 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Button sensor2AufnahmeKnopftbl;
 	@FXML
-	private TableView table;
-	private final ObservableList<Value> data = FXCollections.observableArrayList();
+	private TableView tableS1;
+	@FXML
+	private TableView tableS2;
+
+	private final ObservableList<Value> dataS1 = FXCollections.observableArrayList();
+	private final ObservableList<Value> dataS2 = FXCollections.observableArrayList();
 
 	private XYChart.Series<String, Number> ser, ser2, ser3;
 	private XYChart.Series<String, Number> ser4, ser5, ser6;
 	@FXML
 	private Spinner<Integer> spinner;
 	private int boader = 10;
+	@FXML
+	private Spinner<Integer> spinner2;
+	private int boader2 = 10;
 	@FXML
 	private VBox vbox;
 	@FXML
@@ -155,23 +163,23 @@ public class FXMLDocumentController implements Initializable {
 
 			sensor = new InitSensor1(this);
 			sensor.listen();
-			
+
 			sensor2 = new InitSensor2(this);
 			sensor2.listen();
 
-			Sensor1ID.setText("Sensor ID: ");
-			Sensor1TYPNR.setText("Sensor TypNr: ");
+			sensor1ID.setText("Sensor ID: ");
+			sensor1TYPNR.setText("Sensor TypNr: ");
 
-			Sensor2ID.setText("Sensor ID: ");
-			Sensor2TYPNR.setText("Sensor TypNr: ");
+			sensor2ID.setText("Sensor ID: ");
+			sensor2TYPNR.setText("Sensor TypNr: ");
 
 			cbTemperatur.setSelected(true);
 			cbDruck.setSelected(true);
 			cbUmdrehung.setSelected(true);
 
-			Sensor2cbTemperatur.setSelected(true);
-			Sensor2cbDruck.setSelected(true);
-			Sensor2cbUmdrehung.setSelected(true);
+			cbTemperaturSensor2.setSelected(true);
+			cbDruckSensor2.setSelected(true);
+			cbUmdrehungSensor2.setSelected(true);
 
 			ser = new XYChart.Series<>();
 			ser2 = new XYChart.Series<>();
@@ -187,8 +195,9 @@ public class FXMLDocumentController implements Initializable {
 			Sensor2Pre.getData().add(ser5);
 			Sensor2Re.getData().add(ser6);
 
-			sliderMethode(valueOfSlider, slider, valueOfSlider1, acSlider, Sensor1Temp, Sensor1Pre, Sensor1Re);
-			sliderMethode(Sensor2valueOfSlider1, Sensor2Slider1, Sensor2valueofSlider2, Sensor2acSlider2, Sensor2Temp,
+			sliderMethode(valueOfzoomSliderSens1, zoomSliderSens1, valueOfacSliderSens1, acSliderSens1, Sensor1Temp,
+					Sensor1Pre, Sensor1Re);
+			sliderMethode2(valueOfzoomSliderSens2, zoomSliderSens2, valueOfacSliderSens2, acSliderSens2, Sensor2Temp,
 					Sensor2Pre, Sensor2Re);
 
 			Parent root3 = FXMLLoader.load(getClass().getResource("FXMLArchive.fxml"));
@@ -199,13 +208,21 @@ public class FXMLDocumentController implements Initializable {
 		} catch (IOException ex) {
 			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		SpinnerValueFactory<Integer> valueFactory = //
-				new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, 10);
+		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, 10);
 
 		spinner.setValueFactory(valueFactory);
 		spinner.setEditable(true);
+
+		SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, 10);
+
+		spinner2.setValueFactory(valueFactory2);
+		spinner2.setEditable(true);
+
 		boader = spinner.getValue();
-		createTable();
+		boader2 = spinner2.getValue();
+
+		createTableS1();
+		createTableS2();
 
 	}
 
@@ -244,15 +261,15 @@ public class FXMLDocumentController implements Initializable {
 		}
 
 		Platform.runLater(() -> {
-			Sensor1ID.setText("Sensor ID: " + sensor.id);
-			Sensor1TYPNR.setText("Sensor TypNr: " + sensor.typecode);
+			sensor1ID.setText("Sensor ID: " + sensor.id);
+			sensor1TYPNR.setText("Sensor TypNr: " + sensor.typecode);
 		});
 
-		data.add(new Value(StringTime, String.valueOf(sensor.temp), String.valueOf(sensor.pressure),
+		dataS1.add(new Value(StringTime, String.valueOf(sensor.temp), String.valueOf(sensor.pressure),
 				String.valueOf(sensor.rev)));
 
-		if (aufnahme) {
-			sensor.saveData(db.datalist, sensor.temp, sensor.pressure, sensor.rev, sensor.date, sensor.typecode,
+		if (aufnahmeS1) {
+			sensor.saveData(db.datalistsensor1, sensor.temp, sensor.pressure, sensor.rev, sensor.date, sensor.typecode,
 					sensor.id);
 		}
 
@@ -261,42 +278,51 @@ public class FXMLDocumentController implements Initializable {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void dataChangedS2() {
 
-		boader = spinner.getValue();
+		boader2 = spinner2.getValue();
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		String StringTime = sdf.format(time);
 
 		ser4.getData().add(new XYChart.Data(StringTime, sensor2.temp));
-		if (ser4.getData().size() > boader) {
+		if (ser4.getData().size() > boader2) {
 			ser4.getData().remove(0);
-			for (int i = 0; ser4.getData().size() > boader; i++) {
+			for (int i = 0; ser4.getData().size() > boader2; i++) {
 				ser4.getData().remove(i);
 			}
-			for (int i = 0; ser5.getData().size() > boader; i++) {
+			for (int i = 0; ser5.getData().size() > boader2; i++) {
 				ser5.getData().remove(i);
 			}
-			for (int i = 0; ser6.getData().size() > boader; i++) {
+			for (int i = 0; ser6.getData().size() > boader2; i++) {
 				ser6.getData().remove(i);
 			}
 		}
 		ser5.getData().add(new XYChart.Data(StringTime, sensor2.pressure));
-		if (ser5.getData().size() > boader) {
+		if (ser5.getData().size() > boader2) {
 			ser5.getData().remove(0);
 
 		}
 		ser6.getData().add(new XYChart.Data(StringTime, sensor2.rev));
-		if (ser6.getData().size() > boader) {
+		if (ser6.getData().size() > boader2) {
 			ser6.getData().remove(0);
 		}
 
 		Platform.runLater(() -> {
-			Sensor2ID.setText("Sensor ID: " + sensor2.id);
-			Sensor2TYPNR.setText("Sensor TypNr: " + sensor2.typecode);
+			sensor2ID.setText("Sensor ID: " + sensor2.id);
+			sensor2TYPNR.setText("Sensor TypNr: " + sensor2.typecode);
 		});
+
+		dataS2.add(new Value(StringTime, String.valueOf(sensor2.temp), String.valueOf(sensor2.pressure),
+				String.valueOf(sensor2.rev)));
+
+		if (aufnahmeS2) {
+			sensor2.saveData(db.datalistsensor2, sensor2.temp, sensor2.pressure, sensor2.rev, sensor2.date,
+					sensor2.typecode, sensor2.id);
+		}
+
 	}
 
 	@FXML
-	private void handleButtonActionSensor1(ActionEvent event) {
+	private void handleButtonActionSensor1ShowData(ActionEvent event) {
 
 		// ((NumberAxis<String>)Sensor1Temp.getXAxis()).setAutoRanging(false);
 		if (buttonstop) {
@@ -317,26 +343,27 @@ public class FXMLDocumentController implements Initializable {
 	}
 
 	@FXML
-	private void handleButtonAction2Sensor1(ActionEvent event) {
+	private void handleButtonActionSensor1SaveData(ActionEvent event) {
 
 		if (buttonstop2) {
 			sensor1AufnahmeKnopf.setText("Stop");
 			sensor1AufnahmeKnopftbl.setText("Stop");
 			buttonstop2 = false;
-			aufnahme = true;
+			aufnahmeS1 = true;
 
 		} else if (!buttonstop2) {
 			sensor1AufnahmeKnopf.setText("Start");
 			sensor1AufnahmeKnopftbl.setText("Start");
 			buttonstop2 = true;
-			aufnahme = false;
-			db.saveDB();
+			aufnahmeS1 = false;
+			db.saveDBSensor1();
+			db.closeConnection();
 
 		}
 	}
 
 	@FXML
-	private void handleButtonActionSensor2(ActionEvent event) {
+	private void handleButtonActionSensor2ShowData(ActionEvent event) {
 		if (buttonstop3) {
 			buttonstop3 = false;
 			sensor2StartKnopf.setText("Stop");
@@ -355,16 +382,20 @@ public class FXMLDocumentController implements Initializable {
 	}
 
 	@FXML
-	private void handleButtonAction2Sensor2(ActionEvent event) {
+	private void handleButtonActionSensor2SaveData(ActionEvent event) {
 		if (buttonstop4) {
 			sensor2AufnahmeKnopf.setText("Stop");
 			sensor2AufnahmeKnopftbl.setText("Stop");
 			buttonstop4 = false;
+			aufnahmeS2 = true;
+
 		} else if (!buttonstop4) {
 			sensor2AufnahmeKnopf.setText("Start");
 			sensor2AufnahmeKnopftbl.setText("Start");
 			buttonstop4 = true;
-
+			aufnahmeS2 = false;
+			db.saveDBSensor2();
+			db.closeConnection();
 		}
 	}
 
@@ -385,8 +416,13 @@ public class FXMLDocumentController implements Initializable {
 	}
 
 	@FXML
-	private void deleteTabel1() {
-		data.clear();
+	private void deleteTable1() {
+		dataS1.clear();
+	}
+
+	@FXML
+	private void deleteTable2() {
+		dataS2.clear();
 	}
 
 	@FXML
@@ -411,52 +447,68 @@ public class FXMLDocumentController implements Initializable {
 	private void cbTemperatur(ActionEvent event) {
 		checkBoxSelection(this.vbox, cbTemperatur.isSelected(), cbDruck.isSelected(), cbUmdrehung.isSelected(),
 				Sensor1Temp, Sensor1Pre, Sensor1Re);
-		checkBoxSelection(this.vbox2, Sensor2cbTemperatur.isSelected(), Sensor2cbDruck.isSelected(),
-				Sensor2cbUmdrehung.isSelected(), Sensor2Temp, Sensor2Pre, Sensor2Re);
+		checkBoxSelection(this.vbox2, cbTemperaturSensor2.isSelected(), cbDruckSensor2.isSelected(),
+				cbUmdrehungSensor2.isSelected(), Sensor2Temp, Sensor2Pre, Sensor2Re);
 	}
 
 	// not removeable
 	@FXML
 	private void cbDruck(ActionEvent event) {
-
 	}
 	// not removeable
 
 	@FXML
 	private void cbUmdrehung(ActionEvent event) {
-
 	}
 
 	@FXML
 	private void openTableHandle(ActionEvent event) {
-
 		newWindow.show();
 	}
 
 	@FXML
 	private void openDataArchive(ActionEvent event) {
-
 		newWindow2.show();
 
 	}
 
 	@FXML
-	private void valueOfSliderListen(ActionEvent event) {
+	private void valueOfzoomSliderAction(ActionEvent event) {
 		try {
-			valueOfSlider.setText(valueOfSlider.getText());
-			slider.setValue(Double.parseDouble(valueOfSlider.getText()));
+			valueOfzoomSliderSens1.setText(valueOfzoomSliderSens1.getText());
+			zoomSliderSens1.setValue(Double.parseDouble(valueOfzoomSliderSens1.getText()));
 		} catch (Exception e) {
-			valueOfSlider.setText("1400");
+			valueOfzoomSliderSens1.setText("1378");
 		}
 	}
 
 	@FXML
-	private void valueOfSlider1Listen(ActionEvent event) {
+	private void valueOfacSliderAction(ActionEvent event) {
 		try {
-			valueOfSlider1.setText(valueOfSlider1.getText());
-			acSlider.setValue(Double.parseDouble(valueOfSlider1.getText()));
+			valueOfacSliderSens1.setText(valueOfacSliderSens1.getText());
+			acSliderSens1.setValue(Double.parseDouble(valueOfacSliderSens1.getText()));
 		} catch (Exception e) {
-			valueOfSlider1.setText("1000.0");
+			valueOfacSliderSens1.setText("1000.0");
+		}
+	}
+
+	@FXML
+	private void valueOfzoomSliderAction2(ActionEvent event) {
+		try {
+			valueOfzoomSliderSens2.setText(valueOfzoomSliderSens2.getText());
+			zoomSliderSens2.setValue(Double.parseDouble(valueOfzoomSliderSens2.getText()));
+		} catch (Exception e) {
+			valueOfzoomSliderSens2.setText("1378");
+		}
+	}
+
+	@FXML
+	private void valueOfacSliderAction2(ActionEvent event) {
+		try {
+			valueOfacSliderSens2.setText(valueOfacSliderSens2.getText());
+			acSliderSens2.setValue(Double.parseDouble(valueOfacSliderSens2.getText()));
+		} catch (Exception e) {
+			valueOfacSliderSens2.setText("1000.0");
 		}
 	}
 
@@ -513,6 +565,7 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void sliderMethode(TextField vos, Slider s, TextField vos1, Slider acs,
 			LineChart<String, Number> Sensor1Temp, LineChart<String, Number> Sensor1Pre,
 			LineChart<String, Number> Sensor1Re) {
@@ -570,8 +623,66 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
+	@SuppressWarnings("unchecked")
+	private void sliderMethode2(TextField vos, Slider s, TextField vos1, Slider acs,
+			LineChart<String, Number> Sensor2Temp, LineChart<String, Number> Sensor2Pre,
+			LineChart<String, Number> Sensor2Re) {
+		vos.setText(String.valueOf(s.getValue()));
+		s.valueProperty().addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				vos.textProperty().setValue(String.valueOf((int) s.getValue()));
+
+			}
+		});
+
+		acs.valueProperty().addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				accuracy2 = (int) acs.getValue();
+			}
+		});
+		vos1.setText(String.valueOf(acs.getValue()));
+		acs.valueProperty().addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				vos1.textProperty().setValue(String.valueOf((int) acs.getValue()));
+				sensor2.setVerbosity(acs.getValue());
+
+			}
+		});
+
+		Service<String> service;
+		service = new Service<String>() {
+			@Override
+			protected Task<String> createTask() {
+				return new Task<String>() {
+					@SuppressWarnings("unchecked")
+					@Override
+					protected String call() throws Exception {
+						s.valueProperty().addListener(new ChangeListener() {
+
+							@Override
+							public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+								Sensor2Temp.setPrefWidth(s.getValue());
+								Sensor2Pre.setPrefWidth(s.getValue());
+								Sensor2Re.setPrefWidth(s.getValue());
+							}
+						});
+						return null;
+					}
+				};
+			}
+		};
+		service.start();
+
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void createTable() {
+	public void createTableS1() {
 		TableColumn time = new TableColumn("Zeit");
 		time.setMinWidth(100);
 		time.setMaxWidth(100);
@@ -591,8 +702,37 @@ public class FXMLDocumentController implements Initializable {
 		rev.setMinWidth(150);
 		rev.setMaxWidth(150);
 		rev.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
-		table.setItems(data);
-		table.getColumns().addAll(time, temp, press, rev);
+
+		tableS1.setItems(dataS1);
+		tableS1.getColumns().addAll(time, temp, press, rev);
 
 	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void createTableS2() {
+		TableColumn time = new TableColumn("Zeit");
+		time.setMinWidth(100);
+		time.setMaxWidth(100);
+		time.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
+
+		TableColumn temp = new TableColumn("Temperatur (°C)");
+		temp.setMinWidth(150);
+		temp.setMaxWidth(150);
+		temp.setCellValueFactory(new PropertyValueFactory<Value, String>("value1"));
+
+		TableColumn press = new TableColumn("Druck (bar)");
+		press.setMinWidth(150);
+		press.setMaxWidth(150);
+		press.setCellValueFactory(new PropertyValueFactory<Value, String>("value2"));
+
+		TableColumn rev = new TableColumn("Umdrehung (U/min)");
+		rev.setMinWidth(150);
+		rev.setMaxWidth(150);
+		rev.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
+
+		tableS2.setItems(dataS2);
+		tableS2.getColumns().addAll(time, temp, press, rev);
+
+	}
+
 }

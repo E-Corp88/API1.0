@@ -9,57 +9,54 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Value {
 
-    public final SimpleStringProperty time;
-    public final SimpleStringProperty value1;
-    public final SimpleStringProperty value2;
-    public final SimpleStringProperty value3;
-    
+	public final SimpleStringProperty time;
+	public final SimpleStringProperty value1;
+	public final SimpleStringProperty value2;
+	public final SimpleStringProperty value3;
 
-    public Value(String Xtime, String Xvalue1, String Xvalue2, String Xvalue3) {
-        this.time = new SimpleStringProperty(Xtime);
-        this.value1 = new SimpleStringProperty(Xvalue1);
-        this.value2 = new SimpleStringProperty(Xvalue2);
-        this.value3 = new SimpleStringProperty(Xvalue3);
-        
-    }
+	public Value(String Xtime, String Xvalue1, String Xvalue2, String Xvalue3) {
+		this.time = new SimpleStringProperty(Xtime);
+		this.value1 = new SimpleStringProperty(Xvalue1);
+		this.value2 = new SimpleStringProperty(Xvalue2);
+		this.value3 = new SimpleStringProperty(Xvalue3);
 
-    public String getTime() {
-        return time.get();
-    }
+	}
 
-    public void setTime(String fName) {
-        time.set(fName);
-    }
+	public String getTime() {
+		return time.get();
+	}
 
-    public String getValue1() {
-        return value1.get();
-    }
+	public void setTime(String fName) {
+		time.set(fName);
+	}
 
-    public void setValue1(String fName) {
-        value1.set(fName);
-    }
+	public String getValue1() {
+		return value1.get();
+	}
 
-    public String getValue2() {
-        return value2.get();
-    }
+	public void setValue1(String fName) {
+		value1.set(fName);
+	}
 
-    public void setValue2(String fName) {
-        value2.set(fName);
-    }
+	public String getValue2() {
+		return value2.get();
+	}
 
-    public String getValue3() {
-        return value3.get();
-    }
+	public void setValue2(String fName) {
+		value2.set(fName);
+	}
 
-    public void setValue3(String fName) {
-        value3.set(fName);
-    }
+	public String getValue3() {
+		return value3.get();
+	}
 
-    @Override
-    public String toString() {
-        return "Value{" + "time=" + time + ", value1=" + value1 + ", value2=" + value2 + ", value3=" + value3 + '}';
-    }
+	public void setValue3(String fName) {
+		value3.set(fName);
+	}
 
-   
+	@Override
+	public String toString() {
+		return "Value{" + "time=" + time + ", value1=" + value1 + ", value2=" + value2 + ", value3=" + value3 + '}';
+	}
 
 }
