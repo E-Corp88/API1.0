@@ -5,8 +5,8 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
@@ -19,9 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="849.0" prefWidth="1810.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hft.wiinf.ss.ecorp.controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="849.0" prefWidth="1810.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hft.wiinf.ss.ecorp.controller.FXMLDocumentController">
     <children>
-      <TabPane layoutX="-7.0" prefHeight="818.0" prefWidth="1817.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-7.0" prefHeight="852.0" prefWidth="1817.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Sensor1">
                <content>
@@ -29,28 +29,28 @@
                     <tabs>
                       <Tab text="Graph">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="701.0" prefWidth="1817.0">
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="821.0" prefWidth="1369.0">
                                  <children>
                                     <VBox layoutX="14.0" layoutY="86.0" prefHeight="303.0" prefWidth="261.0">
                                        <children>
-                                          <Label text="%Daten_anzeigen" />
+                                          <Label text="Daten anzeigen:" />
                                           <Button fx:id="sensor1StartKnopf" mnemonicParsing="false" onAction="#handleButtonActionSensor1ShowData" prefHeight="25.0" prefWidth="140.0" text="Start" />
-                                          <Label text="%Daten_aufnehmen" />
+                                          <Label text="Daten aufnehmen:" />
                                           <Button fx:id="sensor1AufnahmeKnopf" mnemonicParsing="false" onAction="#handleButtonActionSensor1SaveData" prefHeight="25.0" prefWidth="139.0" text="Start" />
                                           <VBox prefHeight="200.0" prefWidth="205.0">
                                              <children>
                                                 <Label />
-                                                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteListen" prefHeight="25.0" prefWidth="139.0" text="%Graph_leeren" />
-                                                <CheckBox fx:id="cbTemperatur" mnemonicParsing="false" onAction="#cbTemperatur" text="%Temperatur" />
-                                                <CheckBox fx:id="cbDruck" mnemonicParsing="false" onAction="#cbTemperatur" text="%Druck" />
-                                                <CheckBox fx:id="cbUmdrehung" mnemonicParsing="false" onAction="#cbTemperatur" text="%Umdrehung" />
+                                                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteListen" prefHeight="25.0" prefWidth="139.0" text="Graph leeren" />
+                                                <CheckBox fx:id="cbTemperatur" mnemonicParsing="false" onAction="#cbTemperatur" text="Temperatur (°C)" />
+                                                <CheckBox fx:id="cbDruck" mnemonicParsing="false" onAction="#cbTemperatur" text="Druck (bar)" />
+                                                <CheckBox fx:id="cbUmdrehung" mnemonicParsing="false" onAction="#cbTemperatur" text="Umdrehung (U/min)" />
                                                 <Slider fx:id="zoomSliderSens1" max="3000.0" min="160" value="1378" />
-                                                <Label text="%Skalierung" />
+                                                <Label text="Skalierung" />
                                                 <TextField fx:id="valueOfzoomSliderSens1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#valueOfzoomSliderAction" prefHeight="18.0" prefWidth="76.0" />
-                                                <Label text="%Intervall" />
+                                                <Label text="Intervall (ms)" />
                                                 <Slider fx:id="acSliderSens1" max="3000.0" min="500.0" value="1000.0" />
                                                 <TextField fx:id="valueOfacSliderSens1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#valueOfacSliderAction" prefHeight="18.0" prefWidth="76.0" />
-                                                <Label text="%Anzahl_der_Werte" />
+                                                <Label text="Anzahl der Werte" />
                                                 <Spinner fx:id="spinner" />
                                              </children>
                                           </VBox>
@@ -74,7 +74,7 @@
                                        <content>
                                           <VBox fx:id="vbox" prefHeight="709" prefWidth="1400">
                                              <children>
-                                                <LineChart fx:id="Sensor1Temp" animated="false" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="%Temperatur">
+                                                <LineChart fx:id="Sensor1Temp" animated="false" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="Temperatur (°C)">
                                                   <xAxis>
                                                     <CategoryAxis side="BOTTOM" />
                                                   </xAxis>
@@ -82,7 +82,7 @@
                                                     <NumberAxis prefHeight="202.0" prefWidth="28.0" side="LEFT" />
                                                   </yAxis>
                                                 </LineChart>
-                                                <LineChart fx:id="Sensor1Pre" animated="false" createSymbols="false" focusTraversable="true" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="%Druck">
+                                                <LineChart fx:id="Sensor1Pre" animated="false" createSymbols="false" focusTraversable="true" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="Druck (bar)">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -93,7 +93,7 @@
                                                       <ColorAdjust />
                                                    </effect>
                                                 </LineChart>
-                                                <LineChart fx:id="Sensor1Re" animated="false" createSymbols="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="%Umdrehung">
+                                                <LineChart fx:id="Sensor1Re" animated="false" createSymbols="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="Umdrehung (U/min)">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -105,24 +105,40 @@
                                           </VBox>
                                        </content>
                                     </ScrollPane>
-                                    <VBox layoutX="948.0" layoutY="717.0" prefHeight="22.0" prefWidth="100.0" />
                                  </children>
                               </AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="%Tabelle">
+                        <Tab text="Table">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <TableView fx:id="tableS1" layoutX="206.0" layoutY="8.0" prefHeight="597.0" prefWidth="550.0" />
                                     <VBox layoutX="14.0" layoutY="86.0" prefHeight="133.0" prefWidth="176.0">
                                        <children>
-                                          <Label text="%Daten_anzeigen" />
+                                          <Label text="Daten anzeigen:" />
                                           <Button fx:id="sensor1StartKnopftbl" mnemonicParsing="false" onAction="#handleButtonActionSensor1ShowData" prefHeight="25.0" prefWidth="140.0" text="Start" />
-                                          <Label text="%Daten_aufnehmen" />
+                                          <Label text="Daten aufnehmen:" />
                                           <Button fx:id="sensor1AufnahmeKnopftbl" mnemonicParsing="false" onAction="#handleButtonActionSensor1SaveData" prefHeight="25.0" prefWidth="139.0" text="Start" />
                                           <Label />
-                                          <Button mnemonicParsing="false" onAction="#deleteTable1" prefHeight="25.0" prefWidth="139.0" text="%Tabelle_leeren" />
+                                          <Button mnemonicParsing="false" onAction="#deleteTable1" prefHeight="25.0" prefWidth="139.0" text="Tabelle leeren" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="DataArchive">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="list1" layoutX="206.0" layoutY="8.0" prefHeight="494.0" prefWidth="281.0" />
+                                    <VBox layoutX="14.0" layoutY="86.0" prefHeight="133.0" prefWidth="176.0">
+                                       <children>
+                                          <Label />
+                                          <Button fx:id="loadS1" mnemonicParsing="false" onAction="#loadBtnListen" prefHeight="25.0" prefWidth="101.0" text="Laden" />
+                                          <Label />
+                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Löschen" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -147,7 +163,7 @@
                                              <content>
                                                 <VBox fx:id="vbox2" prefHeight="709.0" prefWidth="1400.0">
                                                    <children>
-                                                      <LineChart fx:id="Sensor2Temp" animated="false" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="%Temperatur">
+                                                      <LineChart fx:id="Sensor2Temp" animated="false" createSymbols="false" legendSide="LEFT" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="Temperatur (°C)">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" />
                                                          </xAxis>
@@ -155,7 +171,7 @@
                                                             <NumberAxis side="LEFT" />
                                                          </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="Sensor2Pre" animated="false" createSymbols="false" focusTraversable="true" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="%Druck">
+                                                      <LineChart fx:id="Sensor2Pre" animated="false" createSymbols="false" focusTraversable="true" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="Druck (bar)">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" />
                                                          </xAxis>
@@ -166,7 +182,7 @@
                                                             <ColorAdjust />
                                                          </effect>
                                                       </LineChart>
-                                                      <LineChart fx:id="Sensor2Re" animated="false" createSymbols="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="%Umdrehung">
+                                                      <LineChart fx:id="Sensor2Re" animated="false" createSymbols="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="1378.0" title="Umdrehung (U/min)">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" />
                                                          </xAxis>
@@ -180,24 +196,24 @@
                                           </ScrollPane>
                                           <VBox layoutX="14.0" layoutY="86.0" prefHeight="303.0" prefWidth="261.0">
                                              <children>
-                                                <Label text="%Daten_anzeigen" />
+                                                <Label text="Daten anzeigen:" />
                                                 <Button fx:id="sensor2StartKnopf" mnemonicParsing="false" onAction="#handleButtonActionSensor2ShowData" prefHeight="25.0" prefWidth="140.0" text="Start" />
-                                                <Label text="%Daten_aufnehmen" />
+                                                <Label text="Daten aufnehmen:" />
                                                 <Button fx:id="sensor2AufnahmeKnopf" mnemonicParsing="false" onAction="#handleButtonActionSensor2SaveData" prefHeight="25.0" prefWidth="139.0" text="Start" />
                                                 <VBox prefHeight="200.0" prefWidth="205.0">
                                                    <children>
                                                       <Label />
-                                                      <Button fx:id="deleteButton1" mnemonicParsing="false" onAction="#deleteListen2" prefHeight="25.0" prefWidth="139.0" text="%Graph_leeren" />
-                                                      <CheckBox fx:id="cbTemperaturSensor2" mnemonicParsing="false" onAction="#cbTemperatur" text="%Temperatur" />
-                                                      <CheckBox fx:id="cbDruckSensor2" mnemonicParsing="false" onAction="#cbTemperatur" text="%Druck" />
-                                                      <CheckBox fx:id="cbUmdrehungSensor2" mnemonicParsing="false" onAction="#cbTemperatur" text="%Umdrehung" />
+                                                      <Button fx:id="deleteButton1" mnemonicParsing="false" onAction="#deleteListen2" prefHeight="25.0" prefWidth="139.0" text="Graph leeren" />
+                                                      <CheckBox fx:id="cbTemperaturSensor2" mnemonicParsing="false" onAction="#cbTemperatur" text="Temperatur (°C)" />
+                                                      <CheckBox fx:id="cbDruckSensor2" mnemonicParsing="false" onAction="#cbTemperatur" text="Druck (bar)" />
+                                                      <CheckBox fx:id="cbUmdrehungSensor2" mnemonicParsing="false" onAction="#cbTemperatur" text="Umdrehung (U/min)" />
                                                       <Slider fx:id="zoomSliderSens2" max="3000.0" min="160" value="1378" />
-                                                      <Label text="%Skalierung" />
+                                                      <Label text="Skalierung" />
                                                       <TextField fx:id="valueOfzoomSliderSens2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#valueOfzoomSliderAction2" prefHeight="18.0" prefWidth="76.0" />
-                                                      <Label text="%Intervall" />
+                                                      <Label text="Intervall (ms)" />
                                                       <Slider fx:id="acSliderSens2" max="3000.0" min="500.0" value="1000.0" />
                                                       <TextField fx:id="valueOfacSliderSens2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#valueOfacSliderAction2" prefHeight="18.0" prefWidth="76.0" />
-                                                      <Label text="%Anzahl_der_Werte" />
+                                                      <Label text="Anzahl der Werte" />
                                                       <Spinner fx:id="spinner2" />
                                                    </children>
                                                 </VBox>
@@ -221,23 +237,40 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab text="%Tabelle">
+                              <Tab text="Table">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <VBox layoutX="14.0" layoutY="86.0" prefHeight="133.0" prefWidth="176.0">
                                              <children>
-                                                <Label text="%Daten_anzeigen" />
+                                                <Label text="Daten anzeigen:" />
                                                 <Button fx:id="sensor2StartKnopftbl" mnemonicParsing="false" onAction="#handleButtonActionSensor2ShowData" prefHeight="25.0" prefWidth="140.0" text="Start" />
-                                                <Label text="%Daten_aufnehmen" />
+                                                <Label text="Daten aufnehmen:" />
                                                 <Button fx:id="sensor2AufnahmeKnopftbl" mnemonicParsing="false" onAction="#handleButtonActionSensor2SaveData" prefHeight="25.0" prefWidth="139.0" text="Start" />
                                                 <Label />
-                                                <Button mnemonicParsing="false" onAction="#deleteTable2" prefHeight="25.0" prefWidth="139.0" text="%Tabelle_leeren" />
+                                                <Button mnemonicParsing="false" onAction="#deleteTable2" prefHeight="25.0" prefWidth="139.0" text="Tabelle leeren" />
                                              </children>
                                           </VBox>
                                           <TableView fx:id="tableS2" layoutX="206.0" layoutY="8.0" prefHeight="597.0" prefWidth="550.0" />
                                        </children></AnchorPane>
                                 </content>
+                              </Tab>
+                              <Tab text="DataArchive">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <ListView fx:id="list2" layoutX="206.0" layoutY="8.0" prefHeight="494.0" prefWidth="281.0" />
+                                          <VBox layoutX="14.0" layoutY="86.0" prefHeight="133.0" prefWidth="176.0">
+                                             <children>
+                                                <Label />
+                                                <Button fx:id="loadS2" mnemonicParsing="false" onAction="#loadBtnListen2" prefHeight="25.0" prefWidth="101.0" text="Laden" />
+                                                <Label />
+                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Löschen" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
                               </Tab>
                           </tabs>
                         </TabPane>
@@ -247,6 +280,5 @@
           </Tab>
         </tabs>
       </TabPane>
-      <ChoiceBox fx:id="languageChoice" layoutX="1735.0" layoutY="823.0" prefHeight="25.0" prefWidth="53.0" />
     </children>
 </AnchorPane>

@@ -3,6 +3,7 @@ package de.hft.wiinf.ss.ecorp.controller;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -11,12 +12,9 @@ import de.hft.wiinf.cebarround.SensorRegister;
 import de.hft.wiinf.ss.ecorp.consumer.InitSensor1;
 import de.hft.wiinf.ss.ecorp.consumer.InitSensor2;
 import de.hft.wiinf.ss.ecorp.db.DB;
-
-import de.hft.wiinf.ss.ecorp.run.Run;
+import de.hft.wiinf.ss.ecorp.logger.LogBook;
 import de.hft.wiinf.ss.ecorp.table.Value;
 
-import java.io.IOException;
-import java.util.logging.Level;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,18 +23,17 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
@@ -45,9 +42,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 /**
  *
@@ -58,6 +58,10 @@ public class FXMLDocumentController implements Initializable {
 	// Adding sensor
 	InitSensor1 sensor;
 	InitSensor2 sensor2;
+
+	ArrayList<String> messreiheS1 = new ArrayList<>();
+	ArrayList<String> messreiheS2 = new ArrayList<>();
+
 
 	DB db = new DB();
 	SensorRegister app = new CeBarRoundDataSensor();
@@ -71,8 +75,8 @@ public class FXMLDocumentController implements Initializable {
 	private boolean buttonstop4 = true;
 	private boolean aufnahmeS1 = true;
 	private boolean aufnahmeS2 = true;
-	private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	ObservableList<String> languageList = FXCollections.observableArrayList("de", "en");
+	private static final Logger log = Logger.getLogger("");
+	private LogBook logBook = new LogBook(log);
 	@FXML
 	private VBox vbox2;
 	@FXML
@@ -144,8 +148,8 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private TableView tableS2;
 
-	private final ObservableList<Value> dataS1 = FXCollections.observableArrayList();
-	private final ObservableList<Value> dataS2 = FXCollections.observableArrayList();
+	private final ObservableList<Value> tbldataS1 = FXCollections.observableArrayList();
+	private final ObservableList<Value> tbldataS2 = FXCollections.observableArrayList();
 
 	private XYChart.Series<String, Number> ser, ser2, ser3;
 	private XYChart.Series<String, Number> ser4, ser5, ser6;
@@ -160,77 +164,64 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private MenuItem delete;
 	@FXML
-	public ChoiceBox languageChoice;
+	private ListView list1;
+	ObservableList<String> list1_Items = FXCollections.observableArrayList();
+	@FXML
+	private ListView list2;
+	ObservableList<String> list2_Items = FXCollections.observableArrayList();
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		try {
-			if (Run.currentLocale == "de") {
-				languageChoice.setValue("de");
-			} else if (Run.currentLocale == "en") {
-				languageChoice.setValue("en");
-			}
-			languageChoice.setItems(languageList);
-			languageChanged();
+		sensor = new InitSensor1(this);
+		sensor.listen();
 
-			sensor = new InitSensor1(this);
-			sensor.listen();
+		sensor2 = new InitSensor2(this);
+		sensor2.listen();
 
-			sensor2 = new InitSensor2(this);
-			sensor2.listen();
+		sensor1ID.setText("Sensor ID: ");
+		sensor1TYPNR.setText("Sensor TypNr: ");
 
-			sensor1ID.setText("Sensor ID: ");
-			sensor1TYPNR.setText("Sensor TypNr: ");
+		sensor2ID.setText("Sensor ID: ");
+		sensor2TYPNR.setText("Sensor TypNr: ");
 
-			sensor2ID.setText("Sensor ID: ");
-			sensor2TYPNR.setText("Sensor TypNr: ");
+		cbTemperatur.setSelected(true);
+		cbDruck.setSelected(true);
+		cbUmdrehung.setSelected(true);
 
-			cbTemperatur.setSelected(true);
-			cbDruck.setSelected(true);
-			cbUmdrehung.setSelected(true);
+		cbTemperaturSensor2.setSelected(true);
+		cbDruckSensor2.setSelected(true);
+		cbUmdrehungSensor2.setSelected(true);
 
-			cbTemperaturSensor2.setSelected(true);
-			cbDruckSensor2.setSelected(true);
-			cbUmdrehungSensor2.setSelected(true);
+		ser = new XYChart.Series<>();
+		ser2 = new XYChart.Series<>();
+		ser3 = new XYChart.Series<>();
+		ser4 = new XYChart.Series<>();
+		ser5 = new XYChart.Series<>();
+		ser6 = new XYChart.Series<>();
 
-			ser = new XYChart.Series<>();
-			ser2 = new XYChart.Series<>();
-			ser3 = new XYChart.Series<>();
-			ser4 = new XYChart.Series<>();
-			ser5 = new XYChart.Series<>();
-			ser6 = new XYChart.Series<>();
+		Sensor1Temp.getData().add(ser);
+		Sensor1Pre.getData().add(ser2);
+		Sensor1Re.getData().add(ser3);
+		Sensor2Temp.getData().add(ser4);
+		Sensor2Pre.getData().add(ser5);
+		Sensor2Re.getData().add(ser6);
 
-			Sensor1Temp.getData().add(ser);
-			Sensor1Pre.getData().add(ser2);
-			Sensor1Re.getData().add(ser3);
-			Sensor2Temp.getData().add(ser4);
-			Sensor2Pre.getData().add(ser5);
-			Sensor2Re.getData().add(ser6);
+		sliderMethode(valueOfzoomSliderSens1, zoomSliderSens1, valueOfacSliderSens1, acSliderSens1, Sensor1Temp,
+				Sensor1Pre, Sensor1Re);
+		sliderMethode2(valueOfzoomSliderSens2, zoomSliderSens2, valueOfacSliderSens2, acSliderSens2, Sensor2Temp,
+				Sensor2Pre, Sensor2Re);
 
-			sliderMethode(valueOfzoomSliderSens1, zoomSliderSens1, valueOfacSliderSens1, acSliderSens1, Sensor1Temp,
-					Sensor1Pre, Sensor1Re);
-			sliderMethode2(valueOfzoomSliderSens2, zoomSliderSens2, valueOfacSliderSens2, acSliderSens2, Sensor2Temp,
-					Sensor2Pre, Sensor2Re);
-
-			Parent root3 = FXMLLoader.load(getClass().getResource("FXMLArchive.fxml"));
-			StackPane secondaryLayout2 = new StackPane();
-			Scene secondScene = new Scene(root3);
-			newWindow2 = new Stage();
-			newWindow2.setScene(secondScene);
-		} catch (IOException ex) {
-			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-		}
 		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, 10);
 
 		spinner.setValueFactory(valueFactory);
-		spinner.setEditable(true);
+		spinner.setEditable(false);
 
 		SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, 10);
 
 		spinner2.setValueFactory(valueFactory2);
-		spinner2.setEditable(true);
+		spinner2.setEditable(false);
 
 		boader = spinner.getValue();
 		boader2 = spinner2.getValue();
@@ -238,94 +229,74 @@ public class FXMLDocumentController implements Initializable {
 		createTableS1();
 		createTableS2();
 
-	}
+		createList(list1, list1_Items);
+		createList(list2, list2_Items);
 
-	@SuppressWarnings("unchecked")
-	public void languageChanged() {
-		languageChoice.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-			Stage stage = (Stage) languageChoice.getScene().getWindow();
-			if (!buttonstop) {
-				sensor.stopMeasure();
-			}
-			if (!buttonstop2) {
-				aufnahmeS1 = false;
-			}
-			if (!buttonstop3) {
-				sensor.stopMeasure();
-			}
-			if (!buttonstop4) {
-				aufnahmeS2 = false;
-			}
-			stage.close();
+		db.getArchive(messreiheS1);
 
-			Platform.runLater(() -> {
-				if (newValue.toString() == "en") {
-					try {
-						new Run().startEN(new Stage());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} else if (newValue.toString() == "de") {
-					try {
-						new Run().start(new Stage());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		try {
+			addItemsToListView(list1, messreiheS1.get(0) + ". Messreihe");
+
+			for (int x = 0; x < messreiheS1.size(); x++) {
+				if (!(messreiheS1.get(x).equals(messreiheS1.get(x + 1)))) {
+					addItemsToListView(list1, messreiheS1.get(x + 1) + ". Messreihe");
+					db.messIDS1 = Integer.parseInt(messreiheS1.get(x + 1)) + 1;
 				}
-			});
-		});
+			}
+		} catch (IndexOutOfBoundsException e) {
+		}
 	}
-	
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void dataChangedS1() {
+		try {
+			boader = spinner.getValue();
+			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			String StringTime = sdf.format(time);
 
-		boader = spinner.getValue();
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
-		Timestamp time = new Timestamp(System.currentTimeMillis());
-		String StringTime = sdf.format(time);
-
-		ser.getData().add(new XYChart.Data(StringTime, sensor.temp));
-		if (ser.getData().size() > boader) {
-			ser.getData().remove(0);
-			for (int i = 0; ser.getData().size() > boader; i++) {
-				ser.getData().remove(i);
+			ser.getData().add(new XYChart.Data(StringTime, sensor.temp));
+			if (ser.getData().size() > boader) {
+				ser.getData().remove(0);
+				for (int i = 0; ser.getData().size() > boader; i++) {
+					ser.getData().remove(i);
+				}
+				for (int i = 0; ser2.getData().size() > boader; i++) {
+					ser2.getData().remove(i);
+				}
+				for (int i = 0; ser3.getData().size() > boader; i++) {
+					ser3.getData().remove(i);
+				}
 			}
-			for (int i = 0; ser2.getData().size() > boader; i++) {
-				ser2.getData().remove(i);
+
+			ser2.getData().add(new XYChart.Data(StringTime, sensor.pressure));
+			if (ser2.getData().size() > boader) {
+				ser2.getData().remove(0);
+
 			}
-			for (int i = 0; ser3.getData().size() > boader; i++) {
-				ser3.getData().remove(i);
+
+			ser3.getData().add(new XYChart.Data(StringTime, sensor.rev));
+			if (ser3.getData().size() > boader) {
+				ser3.getData().remove(0);
+
 			}
+
+			Platform.runLater(() -> {
+				sensor1ID.setText("Sensor ID: " + sensor.id);
+				sensor1TYPNR.setText("Sensor TypNr: " + sensor.typecode);
+			});
+
+			tbldataS1.add(new Value(StringTime, String.valueOf(sensor.temp), String.valueOf(sensor.pressure),
+					String.valueOf(sensor.rev)));
+
+			if (aufnahmeS1) {
+				sensor.saveData(db.datalistsensor1, sensor.temp, sensor.pressure, sensor.rev, sensor.date,
+						sensor.typecode, sensor.id);
+			}
+
+		} catch (Exception e) {
+			log.info("Obacht");
 		}
-
-		ser2.getData().add(new XYChart.Data(StringTime, sensor.pressure));
-		if (ser2.getData().size() > boader) {
-			ser2.getData().remove(0);
-
-		}
-
-		ser3.getData().add(new XYChart.Data(StringTime, sensor.rev));
-		if (ser3.getData().size() > boader) {
-			ser3.getData().remove(0);
-
-		}
-
-		Platform.runLater(() -> {
-			sensor1ID.setText("Sensor ID: " + sensor.id);
-			sensor1TYPNR.setText("Sensor TypNr: " + sensor.typecode);
-		});
-
-		dataS1.add(new Value(StringTime, String.valueOf(sensor.temp), String.valueOf(sensor.pressure),
-				String.valueOf(sensor.rev)));
-
-		if (aufnahmeS1) {
-			sensor.saveData(db.datalistsensor1, sensor.temp, sensor.pressure, sensor.rev, sensor.date, sensor.typecode,
-					sensor.id);
-		}
-
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -364,7 +335,7 @@ public class FXMLDocumentController implements Initializable {
 			sensor2TYPNR.setText("Sensor TypNr: " + sensor2.typecode);
 		});
 
-		dataS2.add(new Value(StringTime, String.valueOf(sensor2.temp), String.valueOf(sensor2.pressure),
+		tbldataS2.add(new Value(StringTime, String.valueOf(sensor2.temp), String.valueOf(sensor2.pressure),
 				String.valueOf(sensor2.rev)));
 
 		if (aufnahmeS2) {
@@ -412,6 +383,8 @@ public class FXMLDocumentController implements Initializable {
 			db.saveDBSensor1();
 			db.closeConnection();
 
+			addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe");
+			db.messIDS1++;
 		}
 	}
 
@@ -449,6 +422,7 @@ public class FXMLDocumentController implements Initializable {
 			aufnahmeS2 = false;
 			db.saveDBSensor2();
 			db.closeConnection();
+
 		}
 	}
 
@@ -458,6 +432,10 @@ public class FXMLDocumentController implements Initializable {
 		ser.getData().clear();
 		ser2.getData().clear();
 		ser3.getData().clear();
+		db.tempValues.clear();
+		db.revValues.clear();
+		db.presValues.clear();
+		db.timeValues.clear();
 	}
 
 	@FXML
@@ -470,12 +448,34 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void deleteTable1() {
-		dataS1.clear();
+		tbldataS1.clear();
+		db.tempValues.clear();
+		db.revValues.clear();
+		db.presValues.clear();
+		db.timeValues.clear();
 	}
 
 	@FXML
 	private void deleteTable2() {
-		dataS2.clear();
+		tbldataS2.clear();
+	}
+
+	@FXML
+	private void loadBtnListen(ActionEvent event) {
+		deleteListen();
+		deleteTable1();
+		getSelectedItem(list1);
+		visualiseDataS1();
+		db.tempValues.clear();
+		db.revValues.clear();
+		db.presValues.clear();
+		db.timeValues.clear();
+
+	}
+
+	@FXML
+	private void loadBtnListen2(ActionEvent event) {
+		getSelectedItem(list2);
 	}
 
 	@FXML
@@ -611,9 +611,9 @@ public class FXMLDocumentController implements Initializable {
 
 		}
 		if (temp == false && pre == false && rev == true) {
-			vbox.getChildren().removeAll(Sensor1Temp, Sensor1Pre, Sensor1Re);
-			vbox.getChildren().addAll(Sensor1Re);
-			Sensor1Re.setPrefHeight(654);
+			vbox.getChildren().removeAll(Temp, Pre, Re);
+			vbox.getChildren().addAll(Re);
+			Re.setPrefHeight(654);
 		}
 
 	}
@@ -756,7 +756,7 @@ public class FXMLDocumentController implements Initializable {
 		rev.setMaxWidth(150);
 		rev.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
 
-		tableS1.setItems(dataS1);
+		tableS1.setItems(tbldataS1);
 		tableS1.getColumns().addAll(time, temp, press, rev);
 
 	}
@@ -783,9 +783,100 @@ public class FXMLDocumentController implements Initializable {
 		rev.setMaxWidth(150);
 		rev.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
 
-		tableS2.setItems(dataS2);
+		tableS2.setItems(tbldataS2);
 		tableS2.getColumns().addAll(time, temp, press, rev);
 
 	}
 
+	public void createList(ListView list, ObservableList<String> items) {
+		list.setItems(items);
+		list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+
+			@Override
+			public ListCell<String> call(ListView<String> param) {
+				return new TextFieldListCell<>(new StringConverter<String>() {
+
+					@Override
+					public String toString(String object) {
+						return object;
+					}
+
+					@Override
+					public String fromString(String string) {
+						return string;
+					}
+				});
+			}
+		});
+
+	}
+
+	public void addItemsToListView(ListView list, String itemName) {
+		list.getItems().add(list.getItems().size(), itemName);
+		list.scrollTo(itemName);
+		list.edit(list.getItems().size() - 1);
+	}
+
+	public void getSelectedItem(ListView list) {
+
+		String s = list.getSelectionModel().getSelectedItem().toString();
+
+		String[] splitted = s.split("\\.");
+
+		db.loadDBS1(splitted[0]);
+
+	}
+
+	public void createPopUp() {
+
+		HBox hbox = new HBox();
+		VBox pane = new VBox();
+
+		Label label = new Label("Wollen Sie die aufgenommenen Daten Speichern?");
+		Label space = new Label();
+		Label space2 = new Label("          ");
+		Button yes = new Button("JA");
+		yes.setPrefWidth(100);
+		Button no = new Button("NEIN");
+		no.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				newWindow.close();
+			}
+		});
+		no.setPrefWidth(100);
+
+		pane.getChildren().add(label);
+		pane.getChildren().add(space);
+		pane.getChildren().add(hbox);
+		hbox.getChildren().add(yes);
+		hbox.getChildren().add(space2);
+		hbox.getChildren().add(no);
+
+		Scene secondScene = new Scene(pane, 230, 80);
+
+		// New window (Stage)
+		Stage newWindow = new Stage();
+		newWindow.setTitle("Speichern");
+		newWindow.setResizable(false);
+		newWindow.setScene(secondScene);
+
+		newWindow.show();
+
+	}
+
+	public void visualiseDataS1() {
+
+		for (int x = 0; x < db.tempValues.size(); x++) {
+
+			ser.getData().add(new XYChart.Data(db.timeValues.get(x), db.tempValues.get(x)));
+			ser2.getData().add(new XYChart.Data(db.timeValues.get(x), db.presValues.get(x)));
+			ser3.getData().add(new XYChart.Data(db.timeValues.get(x), db.revValues.get(x)));
+
+			tbldataS1.add(new Value(db.timeValues.get(x), String.valueOf(db.tempValues.get(x)),
+					String.valueOf(db.presValues.get(x)), String.valueOf(db.revValues.get(x))));
+
+		}
+
+	}
 }

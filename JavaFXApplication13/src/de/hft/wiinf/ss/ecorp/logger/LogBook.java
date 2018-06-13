@@ -11,13 +11,13 @@ import static java.util.logging.Level.ALL;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import de.hft.wiinf.ss.ecorp.logger.LogBook;
+
 
 public class LogBook {
 	// Erzeuge Objekt um ein Logbuch zu formatieren
 
-	public LogBook() {
-		Logger root = Logger.getLogger("");
+	public LogBook(Logger root) {
+		
 		FileHandler txt = null;
 
 		try {
@@ -34,11 +34,11 @@ public class LogBook {
 				if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
 				}
 				ret += record.getLevel();
-				SimpleDateFormat df = new SimpleDateFormat(" dd MMM yyyy HH:mm      ::");
+				SimpleDateFormat df = new SimpleDateFormat(" dd MMM yyyy HH:mm:ss.SSS     ::");
 				Date date = new Date(record.getMillis());
 				ret += df.format(date);
 				ret += this.formatMessage(record);
-				ret += "::       " + record.getMillis() + "ms \n";
+				ret += "::\n";
 
 				return ret;
 
