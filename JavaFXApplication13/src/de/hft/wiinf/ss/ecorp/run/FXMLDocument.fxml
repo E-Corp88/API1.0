@@ -136,9 +136,9 @@
                                     <VBox layoutX="14.0" layoutY="86.0" prefHeight="133.0" prefWidth="176.0">
                                        <children>
                                           <Label />
-                                          <Button fx:id="loadS1" mnemonicParsing="false" onAction="#loadBtnListen" prefHeight="25.0" prefWidth="101.0" text="Laden" />
+                                          <Button fx:id="loadArchiveS1" mnemonicParsing="false" onAction="#loadBtnListen" prefHeight="25.0" prefWidth="101.0" text="Laden" />
                                           <Label />
-                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Löschen" />
+                                          <Button fx:id="deleteArchiveS1" mnemonicParsing="false" onAction="#deleteBtnListen" prefHeight="25.0" prefWidth="101.0" text="Löschen" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -263,9 +263,9 @@
                                           <VBox layoutX="14.0" layoutY="86.0" prefHeight="133.0" prefWidth="176.0">
                                              <children>
                                                 <Label />
-                                                <Button fx:id="loadS2" mnemonicParsing="false" onAction="#loadBtnListen2" prefHeight="25.0" prefWidth="101.0" text="Laden" />
+                                                <Button fx:id="loadArchiveS2" mnemonicParsing="false" onAction="#loadBtnListen2" prefHeight="25.0" prefWidth="101.0" text="Laden" />
                                                 <Label />
-                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Löschen" />
+                                                <Button fx:id="deleteArchiveS2" mnemonicParsing="false" onAction="#deleteBtnListen2" prefHeight="25.0" prefWidth="101.0" text="Löschen" />
                                              </children>
                                           </VBox>
                                        </children>

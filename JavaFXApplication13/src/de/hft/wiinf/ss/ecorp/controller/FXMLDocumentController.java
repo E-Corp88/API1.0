@@ -497,7 +497,6 @@ public class FXMLDocumentController implements Initializable {
 		db.timeValuesS1.clear();
 		getSelectedItemS1(list1);
 		visualiseDataS1();
-
 	}
 
 	@FXML
@@ -510,6 +509,18 @@ public class FXMLDocumentController implements Initializable {
 		db.timeValuesS2.clear();
 		getSelectedItemS2(list2);
 		visualiseDataS2();
+	}
+
+	@FXML
+	private void deleteBtnListen(ActionEvent event) {
+		
+		deleteSelectedItemS1(list1);
+		
+	}
+
+	@FXML
+	private void deleteBtnListen2(ActionEvent event) {
+		deleteSelectedItemS2(list2);
 	}
 
 	@FXML
@@ -850,6 +861,11 @@ public class FXMLDocumentController implements Initializable {
 		list.scrollTo(itemName);
 		list.edit(list.getItems().size() - 1);
 	}
+	
+	public void deleteItemsToListView(ListView list, int itemPos) {
+		list.getItems().remove(itemPos);
+		list.edit(list.getItems().size() - 1);
+	}
 
 	public void getSelectedItemS1(ListView list) {
 
@@ -861,6 +877,18 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
+	public void deleteSelectedItemS1(ListView list) {
+
+		String s = list.getSelectionModel().getSelectedItem().toString();
+
+		String[] splitted = s.split("\\.");
+
+		deleteItemsToListView(list1, Integer.parseInt(splitted[0])-1);
+
+		db.deleteDBS1(splitted[0]);
+
+	}
+
 	public void getSelectedItemS2(ListView list) {
 
 		String s = list.getSelectionModel().getSelectedItem().toString();
@@ -868,6 +896,18 @@ public class FXMLDocumentController implements Initializable {
 		String[] splitted = s.split("\\.");
 
 		db.loadDBS2(splitted[0]);
+
+	}
+
+	public void deleteSelectedItemS2(ListView list) {
+
+		String s = list.getSelectionModel().getSelectedItem().toString();
+
+		String[] splitted = s.split("\\.");
+
+		deleteItemsToListView(list2, Integer.parseInt(splitted[0])-1);
+
+		db.deleteDBS2(splitted[0]);
 
 	}
 
@@ -911,13 +951,21 @@ public class FXMLDocumentController implements Initializable {
 
 	public void visualiseDataS1() {
 
+		String longdate;
+		String[] shortdate;
+		String cutted;
+
 		for (int x = 0; x < db.tempValuesS1.size(); x++) {
 
-			ser.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.tempValuesS1.get(x)));
-			ser2.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.presValuesS1.get(x)));
-			ser3.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.revValuesS1.get(x)));
+			longdate = db.timeValuesS1.get(x);
+			shortdate = longdate.split(" ");
+			cutted = shortdate[0] + " " + shortdate[1] + " " + shortdate[2] + " " + shortdate[3];
 
-			tbldataS1.add(new Value(db.timeValuesS1.get(x), String.valueOf(db.tempValuesS1.get(x)),
+			ser.getData().add(new XYChart.Data(cutted, db.tempValuesS1.get(x)));
+			ser2.getData().add(new XYChart.Data(cutted, db.presValuesS1.get(x)));
+			ser3.getData().add(new XYChart.Data(cutted, db.revValuesS1.get(x)));
+
+			tbldataS1.add(new Value(cutted, String.valueOf(db.tempValuesS1.get(x)),
 					String.valueOf(db.presValuesS1.get(x)), String.valueOf(db.revValuesS1.get(x))));
 
 		}
@@ -926,13 +974,21 @@ public class FXMLDocumentController implements Initializable {
 
 	public void visualiseDataS2() {
 
+		String longdate;
+		String[] shortdate;
+		String cutted;
+
 		for (int x = 0; x < db.tempValuesS2.size(); x++) {
 
-			ser4.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.tempValuesS2.get(x)));
-			ser5.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.presValuesS2.get(x)));
-			ser6.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.revValuesS2.get(x)));
+			longdate = db.timeValuesS2.get(x);
+			shortdate = longdate.split(" ");
+			cutted = shortdate[0] + " " + shortdate[1] + " " + shortdate[2] + " " + shortdate[3];
 
-			tbldataS2.add(new Value(db.timeValuesS2.get(x), String.valueOf(db.tempValuesS2.get(x)),
+			ser4.getData().add(new XYChart.Data(cutted, db.tempValuesS2.get(x)));
+			ser5.getData().add(new XYChart.Data(cutted, db.presValuesS2.get(x)));
+			ser6.getData().add(new XYChart.Data(cutted, db.revValuesS2.get(x)));
+
+			tbldataS2.add(new Value(cutted, String.valueOf(db.tempValuesS2.get(x)),
 					String.valueOf(db.presValuesS2.get(x)), String.valueOf(db.revValuesS2.get(x))));
 
 		}

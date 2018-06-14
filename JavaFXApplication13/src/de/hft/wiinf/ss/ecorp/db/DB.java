@@ -234,6 +234,46 @@ public class DB {
 		}
 	}
 
+	public void deleteDBS1(String num) {
+
+		try {
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+
+			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
+			Statement s = c.createStatement();
+			s.executeQuery("DELETE from ECORP.SENSOR1 WHERE MESSID= '" + num + "'");
+
+		} catch (
+
+		SQLException e) {
+		}
+	}
+
+	public void deleteDBS2(String num) {
+
+		try {
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+
+			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
+			Statement s = c.createStatement();
+			s.executeQuery("DELETE from ECORP.SENSOR2 WHERE MESSID= '" + num + "'");
+
+		} catch (
+
+		SQLException e) {
+		}
+	}
+
 	public void closeConnection() {
 		try {
 			c.close();
