@@ -62,7 +62,6 @@ public class FXMLDocumentController implements Initializable {
 	ArrayList<String> messreiheS1 = new ArrayList<>();
 	ArrayList<String> messreiheS2 = new ArrayList<>();
 
-
 	DB db = new DB();
 	SensorRegister app = new CeBarRoundDataSensor();
 
@@ -232,15 +231,32 @@ public class FXMLDocumentController implements Initializable {
 		createList(list1, list1_Items);
 		createList(list2, list2_Items);
 
-		db.getArchive(messreiheS1);
+		// in thread packen!!!
+		db.getArchiveS1(messreiheS1);
+		db.getArchiveS2(messreiheS2);
 
 		try {
 			addItemsToListView(list1, messreiheS1.get(0) + ". Messreihe");
+			db.messIDS1 = 2;
 
 			for (int x = 0; x < messreiheS1.size(); x++) {
 				if (!(messreiheS1.get(x).equals(messreiheS1.get(x + 1)))) {
 					addItemsToListView(list1, messreiheS1.get(x + 1) + ". Messreihe");
 					db.messIDS1 = Integer.parseInt(messreiheS1.get(x + 1)) + 1;
+				}
+			}
+
+		} catch (IndexOutOfBoundsException e) {
+		}
+
+		try {
+			addItemsToListView(list2, messreiheS2.get(0) + ". Messreihe");
+			db.messIDS2 = 2;
+
+			for (int x = 0; x < messreiheS2.size(); x++) {
+				if (!(messreiheS2.get(x).equals(messreiheS2.get(x + 1)))) {
+					addItemsToListView(list2, messreiheS2.get(x + 1) + ". Messreihe");
+					db.messIDS2 = Integer.parseInt(messreiheS2.get(x + 1)) + 1;
 				}
 			}
 		} catch (IndexOutOfBoundsException e) {
@@ -423,6 +439,9 @@ public class FXMLDocumentController implements Initializable {
 			db.saveDBSensor2();
 			db.closeConnection();
 
+			addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe");
+			db.messIDS2++;
+
 		}
 	}
 
@@ -432,10 +451,10 @@ public class FXMLDocumentController implements Initializable {
 		ser.getData().clear();
 		ser2.getData().clear();
 		ser3.getData().clear();
-		db.tempValues.clear();
-		db.revValues.clear();
-		db.presValues.clear();
-		db.timeValues.clear();
+		db.tempValuesS1.clear();
+		db.revValuesS1.clear();
+		db.presValuesS1.clear();
+		db.timeValuesS1.clear();
 	}
 
 	@FXML
@@ -444,38 +463,53 @@ public class FXMLDocumentController implements Initializable {
 		ser4.getData().clear();
 		ser5.getData().clear();
 		ser6.getData().clear();
+		db.tempValuesS2.clear();
+		db.revValuesS2.clear();
+		db.presValuesS2.clear();
+		db.timeValuesS2.clear();
 	}
 
 	@FXML
 	private void deleteTable1() {
 		tbldataS1.clear();
-		db.tempValues.clear();
-		db.revValues.clear();
-		db.presValues.clear();
-		db.timeValues.clear();
+		db.tempValuesS1.clear();
+		db.revValuesS1.clear();
+		db.presValuesS1.clear();
+		db.timeValuesS1.clear();
 	}
 
 	@FXML
 	private void deleteTable2() {
 		tbldataS2.clear();
+		db.tempValuesS2.clear();
+		db.revValuesS2.clear();
+		db.presValuesS2.clear();
+		db.timeValuesS2.clear();
 	}
 
 	@FXML
 	private void loadBtnListen(ActionEvent event) {
 		deleteListen();
 		deleteTable1();
-		getSelectedItem(list1);
+		db.tempValuesS1.clear();
+		db.revValuesS1.clear();
+		db.presValuesS1.clear();
+		db.timeValuesS1.clear();
+		getSelectedItemS1(list1);
 		visualiseDataS1();
-		db.tempValues.clear();
-		db.revValues.clear();
-		db.presValues.clear();
-		db.timeValues.clear();
 
 	}
 
 	@FXML
 	private void loadBtnListen2(ActionEvent event) {
-		getSelectedItem(list2);
+		deleteListen2();
+		deleteTable2();
+		db.tempValuesS2.clear();
+		db.revValuesS2.clear();
+		db.presValuesS2.clear();
+		db.timeValuesS2.clear();
+		getSelectedItemS2(list2);
+		visualiseDataS2();
 	}
 
 	@FXML
@@ -817,13 +851,23 @@ public class FXMLDocumentController implements Initializable {
 		list.edit(list.getItems().size() - 1);
 	}
 
-	public void getSelectedItem(ListView list) {
+	public void getSelectedItemS1(ListView list) {
 
 		String s = list.getSelectionModel().getSelectedItem().toString();
 
 		String[] splitted = s.split("\\.");
 
 		db.loadDBS1(splitted[0]);
+
+	}
+
+	public void getSelectedItemS2(ListView list) {
+
+		String s = list.getSelectionModel().getSelectedItem().toString();
+
+		String[] splitted = s.split("\\.");
+
+		db.loadDBS2(splitted[0]);
 
 	}
 
@@ -867,14 +911,29 @@ public class FXMLDocumentController implements Initializable {
 
 	public void visualiseDataS1() {
 
-		for (int x = 0; x < db.tempValues.size(); x++) {
+		for (int x = 0; x < db.tempValuesS1.size(); x++) {
 
-			ser.getData().add(new XYChart.Data(db.timeValues.get(x), db.tempValues.get(x)));
-			ser2.getData().add(new XYChart.Data(db.timeValues.get(x), db.presValues.get(x)));
-			ser3.getData().add(new XYChart.Data(db.timeValues.get(x), db.revValues.get(x)));
+			ser.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.tempValuesS1.get(x)));
+			ser2.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.presValuesS1.get(x)));
+			ser3.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.revValuesS1.get(x)));
 
-			tbldataS1.add(new Value(db.timeValues.get(x), String.valueOf(db.tempValues.get(x)),
-					String.valueOf(db.presValues.get(x)), String.valueOf(db.revValues.get(x))));
+			tbldataS1.add(new Value(db.timeValuesS1.get(x), String.valueOf(db.tempValuesS1.get(x)),
+					String.valueOf(db.presValuesS1.get(x)), String.valueOf(db.revValuesS1.get(x))));
+
+		}
+
+	}
+
+	public void visualiseDataS2() {
+
+		for (int x = 0; x < db.tempValuesS2.size(); x++) {
+
+			ser4.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.tempValuesS2.get(x)));
+			ser5.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.presValuesS2.get(x)));
+			ser6.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.revValuesS2.get(x)));
+
+			tbldataS2.add(new Value(db.timeValuesS2.get(x), String.valueOf(db.tempValuesS2.get(x)),
+					String.valueOf(db.presValuesS2.get(x)), String.valueOf(db.revValuesS2.get(x))));
 
 		}
 
