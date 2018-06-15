@@ -513,9 +513,9 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void deleteBtnListen(ActionEvent event) {
-		
+
 		deleteSelectedItemS1(list1);
-		
+
 	}
 
 	@FXML
@@ -562,12 +562,6 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void openTableHandle(ActionEvent event) {
 		newWindow.show();
-	}
-
-	@FXML
-	private void openDataArchive(ActionEvent event) {
-		newWindow2.show();
-
 	}
 
 	@FXML
@@ -861,9 +855,9 @@ public class FXMLDocumentController implements Initializable {
 		list.scrollTo(itemName);
 		list.edit(list.getItems().size() - 1);
 	}
-	
-	public void deleteItemsToListView(ListView list, int itemPos) {
-		list.getItems().remove(itemPos);
+
+	public void deleteItemsToListView(ListView list) {
+		list.getItems().remove(list.getSelectionModel().getSelectedIndex());
 		list.edit(list.getItems().size() - 1);
 	}
 
@@ -883,9 +877,9 @@ public class FXMLDocumentController implements Initializable {
 
 		String[] splitted = s.split("\\.");
 
-		deleteItemsToListView(list1, Integer.parseInt(splitted[0])-1);
-
 		db.deleteDBS1(splitted[0]);
+
+		deleteItemsToListView(list1);
 
 	}
 
@@ -905,9 +899,9 @@ public class FXMLDocumentController implements Initializable {
 
 		String[] splitted = s.split("\\.");
 
-		deleteItemsToListView(list2, Integer.parseInt(splitted[0])-1);
-
 		db.deleteDBS2(splitted[0]);
+
+		deleteItemsToListView(list2);
 
 	}
 

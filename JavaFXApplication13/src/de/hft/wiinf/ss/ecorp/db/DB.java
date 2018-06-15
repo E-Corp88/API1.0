@@ -246,7 +246,7 @@ public class DB {
 
 			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
-			s.executeQuery("DELETE from ECORP.SENSOR1 WHERE MESSID= '" + num + "'");
+			s.executeUpdate("DELETE from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
 
 		} catch (
 
@@ -266,7 +266,7 @@ public class DB {
 
 			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
-			s.executeQuery("DELETE from ECORP.SENSOR2 WHERE MESSID= '" + num + "'");
+			s.executeUpdate("DELETE from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
 
 		} catch (
 
