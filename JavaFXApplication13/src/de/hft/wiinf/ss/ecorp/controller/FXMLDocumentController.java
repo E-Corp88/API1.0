@@ -13,6 +13,7 @@ import de.hft.wiinf.ss.ecorp.consumer.InitSensor1;
 import de.hft.wiinf.ss.ecorp.consumer.InitSensor2;
 import de.hft.wiinf.ss.ecorp.db.DB;
 import de.hft.wiinf.ss.ecorp.logger.LogBook;
+import de.hft.wiinf.ss.ecorp.run.Run;
 import de.hft.wiinf.ss.ecorp.table.Value;
 
 import javafx.application.Platform;
@@ -31,6 +32,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -64,7 +66,7 @@ public class FXMLDocumentController implements Initializable {
 
 	DB db = new DB();
 	SensorRegister app = new CeBarRoundDataSensor();
-
+	ObservableList<String> languageList = FXCollections.observableArrayList("de", "en");
 	private int accuracy2 = 1000;
 	Stage newWindow = new Stage();
 	Stage newWindow2 = new Stage();
@@ -168,11 +170,20 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private ListView list2;
 	ObservableList<String> list2_Items = FXCollections.observableArrayList();
+	@FXML
+	public ChoiceBox languageChoice;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		if (Run.currentLocale == "de") {
+			languageChoice.setValue("de");
+		} else if (Run.currentLocale == "en") {
+			languageChoice.setValue("en");
+		}
+		languageChoice.setItems(languageList);
+		languageChanged();
+		
 		sensor = new InitSensor1(this);
 		sensor.listen();
 
@@ -261,6 +272,44 @@ public class FXMLDocumentController implements Initializable {
 			}
 		} catch (IndexOutOfBoundsException e) {
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void languageChanged() {
+		languageChoice.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+			Stage stage = (Stage) languageChoice.getScene().getWindow();
+			if (!buttonstop) {
+				sensor.stopMeasure();
+			}
+			if (!buttonstop2) {
+				aufnahmeS1 = false;
+			}
+			if (!buttonstop3) {
+				sensor.stopMeasure();
+			}
+			if (!buttonstop4) {
+				aufnahmeS2 = false;
+			}
+			stage.close();
+
+			Platform.runLater(() -> {
+				if (newValue.toString() == "en") {
+					try {
+						new Run().startEN(new Stage());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else if (newValue.toString() == "de") {
+					try {
+						new Run().start(new Stage());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+		});
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
