@@ -183,7 +183,7 @@ public class FXMLDocumentController implements Initializable {
 		}
 		languageChoice.setItems(languageList);
 		languageChanged();
-		
+
 		sensor = new InitSensor1(this);
 		sensor.listen();
 
@@ -273,7 +273,7 @@ public class FXMLDocumentController implements Initializable {
 		} catch (IndexOutOfBoundsException e) {
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void languageChanged() {
 		languageChoice.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
@@ -538,38 +538,50 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void loadBtnListen(ActionEvent event) {
-		deleteListen();
-		deleteTable1();
-		db.tempValuesS1.clear();
-		db.revValuesS1.clear();
-		db.presValuesS1.clear();
-		db.timeValuesS1.clear();
-		getSelectedItemS1(list1);
-		visualiseDataS1();
+		try {
+			deleteListen();
+			deleteTable1();
+			db.tempValuesS1.clear();
+			db.revValuesS1.clear();
+			db.presValuesS1.clear();
+			db.timeValuesS1.clear();
+			getSelectedItemS1(list1);
+			visualiseDataS1();
+		} catch (NullPointerException e) {
+		}
 	}
 
 	@FXML
 	private void loadBtnListen2(ActionEvent event) {
-		deleteListen2();
-		deleteTable2();
-		db.tempValuesS2.clear();
-		db.revValuesS2.clear();
-		db.presValuesS2.clear();
-		db.timeValuesS2.clear();
-		getSelectedItemS2(list2);
-		visualiseDataS2();
+		try {
+			deleteListen2();
+			deleteTable2();
+			db.tempValuesS2.clear();
+			db.revValuesS2.clear();
+			db.presValuesS2.clear();
+			db.timeValuesS2.clear();
+			getSelectedItemS2(list2);
+			visualiseDataS2();
+		} catch (NullPointerException e) {
+		}
 	}
 
 	@FXML
 	private void deleteBtnListen(ActionEvent event) {
 
-		deleteSelectedItemS1(list1);
+		try {
+			deleteSelectedItemS1(list1);
+		} catch (NullPointerException e) {
+		}
 
 	}
 
 	@FXML
 	private void deleteBtnListen2(ActionEvent event) {
-		deleteSelectedItemS2(list2);
+		try {
+			deleteSelectedItemS2(list2);
+		} catch (NullPointerException e) {
+		}
 	}
 
 	@FXML
@@ -905,12 +917,12 @@ public class FXMLDocumentController implements Initializable {
 		list.edit(list.getItems().size() - 1);
 	}
 
-	public void deleteItemsToListView(ListView list) {
+	public void deleteItemsToListView(ListView list) throws NullPointerException {
 		list.getItems().remove(list.getSelectionModel().getSelectedIndex());
 		list.edit(list.getItems().size() - 1);
 	}
 
-	public void getSelectedItemS1(ListView list) {
+	public void getSelectedItemS1(ListView list) throws NullPointerException {
 
 		String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -920,7 +932,7 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
-	public void deleteSelectedItemS1(ListView list) {
+	public void deleteSelectedItemS1(ListView list) throws NullPointerException {
 
 		String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -932,7 +944,7 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
-	public void getSelectedItemS2(ListView list) {
+	public void getSelectedItemS2(ListView list) throws NullPointerException {
 
 		String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -942,7 +954,7 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
-	public void deleteSelectedItemS2(ListView list) {
+	public void deleteSelectedItemS2(ListView list) throws NullPointerException {
 
 		String s = list.getSelectionModel().getSelectedItem().toString();
 
