@@ -132,7 +132,7 @@ public class DB {
 
 	}
 
-	public void getArchiveS1(ArrayList<String> list) {
+	public void getArchiveS1(ArrayList<String> list, ArrayList<String> time) {
 
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -144,9 +144,11 @@ public class DB {
 
 			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT MESSID from ECORP.SENSOR1");
+			ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR1");
 			while (rs.next()) {
 				list.add(rs.getString(1));
+				time.add(rs.getString(2));
+
 			}
 			rs.close();
 
@@ -154,7 +156,7 @@ public class DB {
 		}
 	}
 
-	public void getArchiveS2(ArrayList<String> list) {
+	public void getArchiveS2(ArrayList<String> list, ArrayList<String> time) {
 
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -166,9 +168,11 @@ public class DB {
 
 			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT MESSID from ECORP.SENSOR2");
+			ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR2");
 			while (rs.next()) {
 				list.add(rs.getString(1));
+				time.add(rs.getString(2));
+
 			}
 			rs.close();
 
@@ -189,7 +193,7 @@ public class DB {
 			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery(
-					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR1 WHERE MESSID= '" + num + "'");
+					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
 			while (rs.next()) {
 				tempValuesS1.add(rs.getDouble(1));
 				presValuesS1.add(rs.getDouble(2));
@@ -218,7 +222,7 @@ public class DB {
 			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery(
-					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR2 WHERE MESSID= '" + num + "'");
+					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
 			while (rs.next()) {
 				tempValuesS2.add(rs.getDouble(1));
 				presValuesS2.add(rs.getDouble(2));

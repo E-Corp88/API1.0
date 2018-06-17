@@ -64,6 +64,9 @@ public class FXMLDocumentController implements Initializable {
 	ArrayList<String> messreiheS1 = new ArrayList<>();
 	ArrayList<String> messreiheS2 = new ArrayList<>();
 
+	ArrayList<String> timeS1 = new ArrayList<>();
+	ArrayList<String> timeS2 = new ArrayList<>();
+
 	DB db = new DB();
 	SensorRegister app = new CeBarRoundDataSensor();
 	ObservableList<String> languageList = FXCollections.observableArrayList("de", "en");
@@ -243,16 +246,16 @@ public class FXMLDocumentController implements Initializable {
 		createList(list2, list2_Items);
 
 		// in thread packen!!!
-		db.getArchiveS1(messreiheS1);
-		db.getArchiveS2(messreiheS2);
+		db.getArchiveS1(messreiheS1, timeS1);
+		db.getArchiveS2(messreiheS2, timeS2);
 
 		try {
-			addItemsToListView(list1, messreiheS1.get(0) + ". Messreihe");
+			addItemsToListView(list1, messreiheS1.get(0) + ". Messreihe @" + timeS1.get(0));
 			db.messIDS1 = 2;
 
 			for (int x = 0; x < messreiheS1.size(); x++) {
 				if (!(messreiheS1.get(x).equals(messreiheS1.get(x + 1)))) {
-					addItemsToListView(list1, messreiheS1.get(x + 1) + ". Messreihe");
+					addItemsToListView(list1, messreiheS1.get(x + 1) + ". Messreihe @" + timeS1.get(x + 1));
 					db.messIDS1 = Integer.parseInt(messreiheS1.get(x + 1)) + 1;
 				}
 			}
@@ -261,12 +264,12 @@ public class FXMLDocumentController implements Initializable {
 		}
 
 		try {
-			addItemsToListView(list2, messreiheS2.get(0) + ". Messreihe");
+			addItemsToListView(list2, messreiheS2.get(0) + ". Messreihe @" + timeS2.get(0));
 			db.messIDS2 = 2;
 
 			for (int x = 0; x < messreiheS2.size(); x++) {
 				if (!(messreiheS2.get(x).equals(messreiheS2.get(x + 1)))) {
-					addItemsToListView(list2, messreiheS2.get(x + 1) + ". Messreihe");
+					addItemsToListView(list2, messreiheS2.get(x + 1) + ". Messreihe @" + timeS2.get(x + 1));
 					db.messIDS2 = Integer.parseInt(messreiheS2.get(x + 1)) + 1;
 				}
 			}
@@ -316,7 +319,7 @@ public class FXMLDocumentController implements Initializable {
 	public void dataChangedS1() {
 		try {
 			boader = spinner.getValue();
-			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SS");
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			String StringTime = sdf.format(time);
 
@@ -447,8 +450,9 @@ public class FXMLDocumentController implements Initializable {
 			aufnahmeS1 = false;
 			db.saveDBSensor1();
 			db.closeConnection();
+			db.datalistsensor1.clear();
 
-			addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe");
+			addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe @" + sensor.date.toString());
 			db.messIDS1++;
 		}
 	}
@@ -487,8 +491,9 @@ public class FXMLDocumentController implements Initializable {
 			aufnahmeS2 = false;
 			db.saveDBSensor2();
 			db.closeConnection();
+			db.datalistsensor2.clear();
 
-			addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe");
+			addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe @" + sensor2.date.toString());
 			db.messIDS2++;
 
 		}
@@ -541,12 +546,12 @@ public class FXMLDocumentController implements Initializable {
 		try {
 			deleteListen();
 			deleteTable1();
+			getSelectedItemS1(list1);
+			visualiseDataS1();
 			db.tempValuesS1.clear();
 			db.revValuesS1.clear();
 			db.presValuesS1.clear();
 			db.timeValuesS1.clear();
-			getSelectedItemS1(list1);
-			visualiseDataS1();
 		} catch (NullPointerException e) {
 		}
 	}
@@ -556,12 +561,12 @@ public class FXMLDocumentController implements Initializable {
 		try {
 			deleteListen2();
 			deleteTable2();
+			getSelectedItemS2(list2);
+			visualiseDataS2();
 			db.tempValuesS2.clear();
 			db.revValuesS2.clear();
 			db.presValuesS2.clear();
 			db.timeValuesS2.clear();
-			getSelectedItemS2(list2);
-			visualiseDataS2();
 		} catch (NullPointerException e) {
 		}
 	}
@@ -942,6 +947,10 @@ public class FXMLDocumentController implements Initializable {
 
 		deleteItemsToListView(list1);
 
+		if (list1.getSelectionModel().isEmpty()) {
+			db.messIDS1 = 1;
+		}
+
 	}
 
 	public void getSelectedItemS2(ListView list) throws NullPointerException {
@@ -963,6 +972,10 @@ public class FXMLDocumentController implements Initializable {
 		db.deleteDBS2(splitted[0]);
 
 		deleteItemsToListView(list2);
+
+		if (list2.getSelectionModel().isEmpty()) {
+			db.messIDS2 = 1;
+		}
 
 	}
 
@@ -1024,6 +1037,10 @@ public class FXMLDocumentController implements Initializable {
 					String.valueOf(db.presValuesS1.get(x)), String.valueOf(db.revValuesS1.get(x))));
 
 		}
+
+		db.tempValuesS1.clear();
+		db.revValuesS1.clear();
+		db.presValuesS1.clear();
 
 	}
 
