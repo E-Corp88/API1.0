@@ -24,7 +24,7 @@
     <children>
       <TabPane layoutX="-7.0" prefHeight="713.0" prefWidth="1817.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Sensor1">
+          <Tab text="Sensor 1">
                <content>
                   <TabPane prefHeight="737.0" prefWidth="1810.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
