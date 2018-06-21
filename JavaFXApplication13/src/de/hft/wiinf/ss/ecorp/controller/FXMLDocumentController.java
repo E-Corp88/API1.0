@@ -60,13 +60,15 @@ public class FXMLDocumentController implements Initializable {
 	// Adding sensor
 	InitSensor1 sensor;
 	InitSensor2 sensor2;
-	
-	
+
 	ArrayList<String> messreiheS1 = new ArrayList<>();
 	ArrayList<String> messreiheS2 = new ArrayList<>();
 
 	ArrayList<String> timeS1 = new ArrayList<>();
 	ArrayList<String> timeS2 = new ArrayList<>();
+
+	String timeSavedS1;
+	String timeSavedS2;
 
 	DB db = new DB();
 	SensorRegister app = new CeBarRoundDataSensor();
@@ -152,7 +154,22 @@ public class FXMLDocumentController implements Initializable {
 	private TableView tableS1;
 	@FXML
 	private TableView tableS2;
-
+	@FXML
+	private TableColumn time1;
+	@FXML
+	private TableColumn temp1;
+	@FXML
+	private TableColumn press1;
+	@FXML
+	private TableColumn rev1;
+	@FXML
+	private TableColumn time2;
+	@FXML
+	private TableColumn temp2;
+	@FXML
+	private TableColumn press2;
+	@FXML
+	private TableColumn rev2;
 	private final ObservableList<Value> tbldataS1 = FXCollections.observableArrayList();
 	private final ObservableList<Value> tbldataS2 = FXCollections.observableArrayList();
 
@@ -320,7 +337,7 @@ public class FXMLDocumentController implements Initializable {
 	public void dataChangedS1() {
 		try {
 			boader = spinner.getValue();
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SS");
+			SimpleDateFormat sdf = new SimpleDateFormat("MMM d. HH:mm:ss.SS");
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			String StringTime = sdf.format(time);
 
@@ -359,7 +376,10 @@ public class FXMLDocumentController implements Initializable {
 					String.valueOf(sensor.rev)));
 
 			if (aufnahmeS1) {
-				sensor.saveData(db.datalistsensor1, sensor.temp, sensor.pressure, sensor.rev, sensor.date,
+
+				timeSavedS1 = sdf.format(sensor.date);
+
+				sensor.saveData(db.datalistsensor1, sensor.temp, sensor.pressure, sensor.rev, timeSavedS1,
 						sensor.typecode, sensor.id);
 			}
 
@@ -372,7 +392,7 @@ public class FXMLDocumentController implements Initializable {
 	public void dataChangedS2() {
 
 		boader2 = spinner2.getValue();
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM d. HH:mm:ss.SSS");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		String StringTime = sdf.format(time);
 
@@ -408,7 +428,10 @@ public class FXMLDocumentController implements Initializable {
 				String.valueOf(sensor2.rev)));
 
 		if (aufnahmeS2) {
-			sensor2.saveData(db.datalistsensor2, sensor2.temp, sensor2.pressure, sensor2.rev, sensor2.date,
+
+			timeSavedS2 = sdf.format(sensor2.date);
+
+			sensor2.saveData(db.datalistsensor2, sensor2.temp, sensor2.pressure, sensor2.rev, timeSavedS2,
 					sensor2.typecode, sensor2.id);
 		}
 
@@ -423,12 +446,17 @@ public class FXMLDocumentController implements Initializable {
 			sensor1StartKnopf.setText("Stop");
 			sensor1StartKnopftbl.setText("Stop");
 
+			languageChoice.setDisable(true);
+
 			// receiving data
 			sensor.startMeasure();
 
 		} else if (!buttonstop) {
 			sensor1StartKnopf.setText("Start");
 			sensor1StartKnopftbl.setText("Start");
+
+			languageChoice.setDisable(false);
+
 			// Not receiving data anymore
 			sensor.stopMeasure();
 			buttonstop = true;
@@ -453,7 +481,7 @@ public class FXMLDocumentController implements Initializable {
 			db.closeConnection();
 			db.datalistsensor1.clear();
 
-			addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe @" + sensor.date.toString());
+			addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe @" + timeSavedS1);
 			db.messIDS1++;
 		}
 	}
@@ -465,12 +493,17 @@ public class FXMLDocumentController implements Initializable {
 			sensor2StartKnopf.setText("Stop");
 			sensor2StartKnopftbl.setText("Stop");
 
+			languageChoice.setDisable(true);
+
 			// receiving data
 			sensor2.startMeasure();
 
 		} else if (!buttonstop3) {
 			sensor2StartKnopf.setText("Start");
 			sensor2StartKnopftbl.setText("Start");
+
+			languageChoice.setDisable(false);
+
 			// Not receiving data anymore
 			sensor2.stopMeasure();
 			buttonstop3 = true;
@@ -494,7 +527,7 @@ public class FXMLDocumentController implements Initializable {
 			db.closeConnection();
 			db.datalistsensor2.clear();
 
-			addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe @" + sensor2.date.toString());
+			addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe @" + timeSavedS2);
 			db.messIDS2++;
 
 		}
@@ -624,11 +657,6 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void cbUmdrehung(ActionEvent event) {
-	}
-
-	@FXML
-	private void openTableHandle(ActionEvent event) {
-		newWindow.show();
 	}
 
 	@FXML
@@ -842,55 +870,39 @@ public class FXMLDocumentController implements Initializable {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createTableS1() {
-		TableColumn time = new TableColumn("Zeit");
-		time.setMinWidth(150);
-		time.setMaxWidth(150);
-		time.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
 
-		TableColumn temp = new TableColumn("Temperatur (°C)");
-		temp.setMinWidth(150);
-		temp.setMaxWidth(150);
-		temp.setCellValueFactory(new PropertyValueFactory<Value, String>("value1"));
+		time1.setResizable(false);
+		time1.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
 
-		TableColumn press = new TableColumn("Druck (bar)");
-		press.setMinWidth(150);
-		press.setMaxWidth(150);
-		press.setCellValueFactory(new PropertyValueFactory<Value, String>("value2"));
+		temp1.setResizable(false);
+		temp1.setCellValueFactory(new PropertyValueFactory<Value, String>("value1"));
 
-		TableColumn rev = new TableColumn("Umdrehung (U/min)");
-		rev.setMinWidth(150);
-		rev.setMaxWidth(150);
-		rev.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
+		press1.setResizable(false);
+		press1.setCellValueFactory(new PropertyValueFactory<Value, String>("value2"));
+
+		rev1.setResizable(false);
+		rev1.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
 
 		tableS1.setItems(tbldataS1);
-		tableS1.getColumns().addAll(time, temp, press, rev);
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createTableS2() {
-		TableColumn time = new TableColumn("Zeit");
-		time.setMinWidth(100);
-		time.setMaxWidth(100);
-		time.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
 
-		TableColumn temp = new TableColumn("Temperatur (°C)");
-		temp.setMinWidth(150);
-		temp.setMaxWidth(150);
-		temp.setCellValueFactory(new PropertyValueFactory<Value, String>("value1"));
+		time2.setResizable(false);
+		time2.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
 
-		TableColumn press = new TableColumn("Druck (bar)");
-		press.setMinWidth(150);
-		press.setMaxWidth(150);
-		press.setCellValueFactory(new PropertyValueFactory<Value, String>("value2"));
+		temp2.setResizable(false);
+		temp2.setCellValueFactory(new PropertyValueFactory<Value, String>("value1"));
 
-		TableColumn rev = new TableColumn("Umdrehung (U/min)");
-		rev.setMinWidth(150);
-		rev.setMaxWidth(150);
-		rev.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
+		press2.setResizable(false);
+		press2.setCellValueFactory(new PropertyValueFactory<Value, String>("value2"));
+
+		rev2.setResizable(false);
+		rev2.setCellValueFactory(new PropertyValueFactory<Value, String>("value3"));
 
 		tableS2.setItems(tbldataS2);
-		tableS2.getColumns().addAll(time, temp, press, rev);
 
 	}
 
@@ -1020,48 +1032,28 @@ public class FXMLDocumentController implements Initializable {
 
 	public void visualiseDataS1() {
 
-		String longdate;
-		String[] shortdate;
-		String cutted;
-
 		for (int x = 0; x < db.tempValuesS1.size(); x++) {
 
-			longdate = db.timeValuesS1.get(x);
-			shortdate = longdate.split(" ");
-			cutted = shortdate[0] + " " + shortdate[1] + " " + shortdate[2] + " " + shortdate[3];
+			ser.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.tempValuesS1.get(x)));
+			ser2.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.presValuesS1.get(x)));
+			ser3.getData().add(new XYChart.Data(db.timeValuesS1.get(x), db.revValuesS1.get(x)));
 
-			ser.getData().add(new XYChart.Data(cutted, db.tempValuesS1.get(x)));
-			ser2.getData().add(new XYChart.Data(cutted, db.presValuesS1.get(x)));
-			ser3.getData().add(new XYChart.Data(cutted, db.revValuesS1.get(x)));
-
-			tbldataS1.add(new Value(cutted, String.valueOf(db.tempValuesS1.get(x)),
+			tbldataS1.add(new Value(db.timeValuesS1.get(x), String.valueOf(db.tempValuesS1.get(x)),
 					String.valueOf(db.presValuesS1.get(x)), String.valueOf(db.revValuesS1.get(x))));
 
 		}
-
-		db.tempValuesS1.clear();
-		db.revValuesS1.clear();
-		db.presValuesS1.clear();
 
 	}
 
 	public void visualiseDataS2() {
 
-		String longdate;
-		String[] shortdate;
-		String cutted;
-
 		for (int x = 0; x < db.tempValuesS2.size(); x++) {
 
-			longdate = db.timeValuesS2.get(x);
-			shortdate = longdate.split(" ");
-			cutted = shortdate[0] + " " + shortdate[1] + " " + shortdate[2] + " " + shortdate[3];
+			ser4.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.tempValuesS2.get(x)));
+			ser5.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.presValuesS2.get(x)));
+			ser6.getData().add(new XYChart.Data(db.timeValuesS2.get(x), db.revValuesS2.get(x)));
 
-			ser4.getData().add(new XYChart.Data(cutted, db.tempValuesS2.get(x)));
-			ser5.getData().add(new XYChart.Data(cutted, db.presValuesS2.get(x)));
-			ser6.getData().add(new XYChart.Data(cutted, db.revValuesS2.get(x)));
-
-			tbldataS2.add(new Value(cutted, String.valueOf(db.tempValuesS2.get(x)),
+			tbldataS2.add(new Value(db.timeValuesS2.get(x), String.valueOf(db.tempValuesS2.get(x)),
 					String.valueOf(db.presValuesS2.get(x)), String.valueOf(db.revValuesS2.get(x))));
 
 		}

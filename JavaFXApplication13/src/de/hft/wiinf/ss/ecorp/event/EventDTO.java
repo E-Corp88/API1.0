@@ -7,11 +7,11 @@ public class EventDTO {
 	private double temp = 0;
 	private double pressure = 0;
 	private int rev = 0;
-	private Date date;
+	private String date;
 	private String typecode = "";
 	private long id = 0;
 
-	public EventDTO(double temp, double pressure, int rev, Date date, String typecode, long id) {
+	public EventDTO(double temp, double pressure, int rev, String date, String typecode, long id) {
 		this.temp = temp;
 		this.pressure = pressure;
 		this.rev = rev;
@@ -32,7 +32,7 @@ public class EventDTO {
 		return rev;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
