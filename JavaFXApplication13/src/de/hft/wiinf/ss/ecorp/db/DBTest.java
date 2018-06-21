@@ -21,7 +21,7 @@ public class DBTest {
 	@Test
 	public void saveDBSensor1SQLExceptionTest() {	
 		DB db = new DB();
-		db.getArchiveS1(list, time);
+		//db.getArchiveS1(list, time);
 		
 						
 	}
