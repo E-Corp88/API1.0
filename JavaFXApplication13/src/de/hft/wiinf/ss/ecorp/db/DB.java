@@ -18,37 +18,45 @@ public class DB {
 
 	public ArrayList<EventDTO> datalistsensor1 = new ArrayList<>();
 	public ArrayList<EventDTO> datalistsensor2 = new ArrayList<>();
-	
-	//lists filled with data from sensor1 out of the db
+
+	// lists filled with data from sensor1 out of the db
 	public ArrayList<Double> tempValuesS1 = new ArrayList<>();
 	public ArrayList<Double> presValuesS1 = new ArrayList<>();
 	public ArrayList<Integer> revValuesS1 = new ArrayList<>();
 	public ArrayList<String> timeValuesS1 = new ArrayList<>();
-	
-	//lists filled with data from sensor2 out of the db
+
+	// lists filled with data from sensor2 out of the db
 	public ArrayList<Double> tempValuesS2 = new ArrayList<>();
 	public ArrayList<Double> presValuesS2 = new ArrayList<>();
 	public ArrayList<Integer> revValuesS2 = new ArrayList<>();
 	public ArrayList<String> timeValuesS2 = new ArrayList<>();
-	
-	//counter for measurement series
+
+	// counter for measurement series
 	public Integer messIDS1 = 1;
 	public Integer messIDS2 = 1;
 
-
 	Connection c;
-	
-	//comment!
-	public void saveDBSensor1() {
+
+	public DB() {
+		loadDatabaseDriver();
+		establishConnection();
+
+	}
+
+	private void establishConnection() {
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
+			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	// comment!
+	public void saveDBSensor1() {
 
 		try {
 
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 
 			try {
@@ -85,16 +93,18 @@ public class DB {
 
 	}
 
-	public void saveDBSensor2() {
+	private void loadDatabaseDriver() {
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+    
+	public void saveDBSensor2() {
 
 		try {
 
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 
 			try {
@@ -134,14 +144,7 @@ public class DB {
 	public void getArchiveS1(ArrayList<String> list, ArrayList<String> time) {
 
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
-		try {
-
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR1");
 			while (rs.next()) {
@@ -158,14 +161,7 @@ public class DB {
 	public void getArchiveS2(ArrayList<String> list, ArrayList<String> time) {
 
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
-		try {
-
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR2");
 			while (rs.next()) {
@@ -182,14 +178,7 @@ public class DB {
 	public void loadDBS1(String num) {
 
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
-		try {
-
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery(
 					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
@@ -211,14 +200,7 @@ public class DB {
 	public void loadDBS2(String num) {
 
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
-		try {
-
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery(
 					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
@@ -240,16 +222,9 @@ public class DB {
 	public void deleteDBS1(String num) {
 
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		try {
-
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			s.executeUpdate("DELETE from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
+			s.close();
 
 		} catch (
 
@@ -260,14 +235,6 @@ public class DB {
 	public void deleteDBS2(String num) {
 
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		try {
-
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
 			Statement s = c.createStatement();
 			s.executeUpdate("DELETE from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
 
