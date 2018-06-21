@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Jun 18 12:02:04 CEST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0164-1258-25d6-000006eb67d0 
-on database directory C:\Users\Alexi\Documents\IDE´s\Eclipse\Wi-Inf-Projekt-1\API1.0\JavaFXApplication13\MyDB with class loader sun.misc.Launcher$AppClassLoader@6d06d69c 
-Loaded from file:/C:/Users/Alexi/Documents/IDE%c2%b4s/Eclipse/Wi-Inf-Projekt-1/API1.0/JavaFXApplication13/lib/derby.jar
+Thu Jun 21 13:33:02 CEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0164-221e-8321-00000c7dadd8 
+on database directory P:\Wirtschaftsinformatik\2.Semester\Wi-Inf-Projekt\API1.0\JavaFXApplication13\MyDB with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
+Loaded from file:/P:/Wirtschaftsinformatik/2.Semester/Wi-Inf-Projekt/API1.0/JavaFXApplication13/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_161-b12
-user.dir=C:\Users\Alexi\Documents\IDE´s\Eclipse\Wi-Inf-Projekt-1\API1.0\JavaFXApplication13
-os.name=Windows 8.1
+java.runtime.version=1.8.0_151-b12
+user.dir=P:\Wirtschaftsinformatik\2.Semester\Wi-Inf-Projekt\API1.0\JavaFXApplication13
+os.name=Windows 7
 os.arch=amd64
-os.version=6.3
+os.version=6.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

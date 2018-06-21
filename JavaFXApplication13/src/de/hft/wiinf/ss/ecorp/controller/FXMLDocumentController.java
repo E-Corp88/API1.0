@@ -60,7 +60,8 @@ public class FXMLDocumentController implements Initializable {
 	// Adding sensor
 	InitSensor1 sensor;
 	InitSensor2 sensor2;
-
+	
+	
 	ArrayList<String> messreiheS1 = new ArrayList<>();
 	ArrayList<String> messreiheS2 = new ArrayList<>();
 
@@ -842,8 +843,8 @@ public class FXMLDocumentController implements Initializable {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void createTableS1() {
 		TableColumn time = new TableColumn("Zeit");
-		time.setMinWidth(100);
-		time.setMaxWidth(100);
+		time.setMinWidth(150);
+		time.setMaxWidth(150);
 		time.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
 
 		TableColumn temp = new TableColumn("Temperatur (°C)");

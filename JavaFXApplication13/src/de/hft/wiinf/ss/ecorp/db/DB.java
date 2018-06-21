@@ -18,26 +18,27 @@ public class DB {
 
 	public ArrayList<EventDTO> datalistsensor1 = new ArrayList<>();
 	public ArrayList<EventDTO> datalistsensor2 = new ArrayList<>();
-
+	
+	//lists filled with data from sensor1 out of the db
 	public ArrayList<Double> tempValuesS1 = new ArrayList<>();
 	public ArrayList<Double> presValuesS1 = new ArrayList<>();
 	public ArrayList<Integer> revValuesS1 = new ArrayList<>();
 	public ArrayList<String> timeValuesS1 = new ArrayList<>();
-
+	
+	//lists filled with data from sensor2 out of the db
 	public ArrayList<Double> tempValuesS2 = new ArrayList<>();
 	public ArrayList<Double> presValuesS2 = new ArrayList<>();
 	public ArrayList<Integer> revValuesS2 = new ArrayList<>();
 	public ArrayList<String> timeValuesS2 = new ArrayList<>();
-
+	
+	//counter for measurement series
 	public Integer messIDS1 = 1;
 	public Integer messIDS2 = 1;
-	public Integer messIDNrS1 = 0;
-	public Integer messIDNrS2 = 0;
 
-	// FXMLDocumentController controller = new FXMLDocumentController();
 
 	Connection c;
-
+	
+	//comment!
 	public void saveDBSensor1() {
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -57,14 +58,14 @@ public class DB {
 
 			try {
 				s.executeUpdate(
-						"CREATE TABLE ECORP.SENSOR1 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30), MESSIDNR VARCHAR(30))");
+						"CREATE TABLE ECORP.SENSOR1 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30))");
 			} catch (SQLException e) {
 			}
 
 			if (!datalistsensor1.isEmpty()) {
 				for (int x = 0; x < datalistsensor1.size(); x++) {
 					PreparedStatement ps = c.prepareStatement(
-							"INSERT INTO ECORP.SENSOR1 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID,MESSIDNR) VALUES(?,?,?,?,?,?,?)");
+							"INSERT INTO ECORP.SENSOR1 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID) VALUES(?,?,?,?,?,?)");
 
 					ps.setString(1, String.valueOf(datalistsensor1.get(x).getTemp()));
 					ps.setString(2, String.valueOf(datalistsensor1.get(x).getPressure()));
@@ -72,7 +73,6 @@ public class DB {
 					ps.setString(4, (datalistsensor1.get(x).getDate().toString()));
 					ps.setString(5, String.valueOf(datalistsensor1.get(x).getTypecode()));
 					ps.setString(6, messIDS1.toString());
-					ps.setString(7, messIDNrS1.toString());
 					ps.executeUpdate();
 				}
 			}
@@ -104,14 +104,14 @@ public class DB {
 
 			try {
 				s.executeUpdate(
-						"CREATE TABLE ECORP.SENSOR2 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30), MESSIDNR VARCHAR(30))");
+						"CREATE TABLE ECORP.SENSOR2 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30))");
 			} catch (SQLException e) {
 			}
 
 			if (!datalistsensor2.isEmpty()) {
 				for (int x = 0; x < datalistsensor2.size(); x++) {
 					PreparedStatement ps = c.prepareStatement(
-							"INSERT INTO ECORP.SENSOR2 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID,MESSIDNR) VALUES(?,?,?,?,?,?,?)");
+							"INSERT INTO ECORP.SENSOR2 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID,MESSIDNR) VALUES(?,?,?,?,?,?)");
 
 					ps.setString(1, String.valueOf(datalistsensor2.get(x).getTemp()));
 					ps.setString(2, String.valueOf(datalistsensor2.get(x).getPressure()));
@@ -119,7 +119,6 @@ public class DB {
 					ps.setString(4, (datalistsensor2.get(x).getDate().toString()));
 					ps.setString(5, String.valueOf(datalistsensor2.get(x).getTypecode()));
 					ps.setString(6, messIDS2.toString());
-					ps.setString(7, messIDNrS2.toString());
 					ps.executeUpdate();
 				}
 			}

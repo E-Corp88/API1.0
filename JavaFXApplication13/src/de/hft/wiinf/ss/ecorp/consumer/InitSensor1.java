@@ -63,7 +63,8 @@ public class InitSensor1 implements CeBarRoundObserver<SensorEvent> {
 		});
 
 	}
-
+	
+	//comment!
 	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, Date date,
 			String typecode, long id) {
 		EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
