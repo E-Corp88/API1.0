@@ -122,7 +122,7 @@
                                                 <Label text="%Daten_aufnehmen" />
                                                 <Button fx:id="sensor1AufnahmeKnopftbl" mnemonicParsing="false" onAction="#handleButtonActionSensor1SaveData" prefHeight="25.0" prefWidth="139.0" text="Start" />
                                                 <Label />
-                                                <Button mnemonicParsing="false" onAction="#deleteTable2" prefHeight="25.0" prefWidth="139.0" text="%Tabelle_leeren" />
+                                                <Button mnemonicParsing="false" onAction="#deleteTable1" prefHeight="25.0" prefWidth="139.0" text="%Tabelle_leeren" />
                                              </children>
                                           </VBox>
                                           <TableView fx:id="tableS1" layoutX="206.0" layoutY="8.0" prefHeight="597.0" prefWidth="600">

@@ -151,6 +151,10 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Button sensor2AufnahmeKnopftbl;
 	@FXML
+	private Button loadArchiveS1;
+	@FXML
+	private Button loadArchiveS2;
+	@FXML
 	private TableView tableS1;
 	@FXML
 	private TableView tableS2;
@@ -447,6 +451,7 @@ public class FXMLDocumentController implements Initializable {
 			sensor1StartKnopftbl.setText("Stop");
 
 			languageChoice.setDisable(true);
+			loadArchiveS1.setDisable(true);
 
 			// receiving data
 			sensor.startMeasure();
@@ -456,6 +461,7 @@ public class FXMLDocumentController implements Initializable {
 			sensor1StartKnopftbl.setText("Start");
 
 			languageChoice.setDisable(false);
+			loadArchiveS1.setDisable(false);
 
 			// Not receiving data anymore
 			sensor.stopMeasure();
@@ -471,18 +477,21 @@ public class FXMLDocumentController implements Initializable {
 			sensor1AufnahmeKnopftbl.setText("Stop");
 			buttonstop2 = false;
 			aufnahmeS1 = true;
+			loadArchiveS1.setDisable(true);
 
 		} else if (!buttonstop2) {
 			sensor1AufnahmeKnopf.setText("Start");
 			sensor1AufnahmeKnopftbl.setText("Start");
 			buttonstop2 = true;
 			aufnahmeS1 = false;
+			loadArchiveS1.setDisable(false);
 			db.saveDBSensor1();
-			db.closeConnection();
-			db.datalistsensor1.clear();
 
-			addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe @" + timeSavedS1);
-			db.messIDS1++;
+			if (!db.datalistsensor1.isEmpty()) {
+				addItemsToListView(list1, db.messIDS1.toString() + ". Messreihe @" + timeSavedS1);
+				db.messIDS1++;
+			}
+			db.datalistsensor1.clear();
 		}
 	}
 
@@ -494,6 +503,7 @@ public class FXMLDocumentController implements Initializable {
 			sensor2StartKnopftbl.setText("Stop");
 
 			languageChoice.setDisable(true);
+			loadArchiveS2.setDisable(true);
 
 			// receiving data
 			sensor2.startMeasure();
@@ -503,6 +513,7 @@ public class FXMLDocumentController implements Initializable {
 			sensor2StartKnopftbl.setText("Start");
 
 			languageChoice.setDisable(false);
+			loadArchiveS2.setDisable(false);
 
 			// Not receiving data anymore
 			sensor2.stopMeasure();
@@ -517,19 +528,21 @@ public class FXMLDocumentController implements Initializable {
 			sensor2AufnahmeKnopftbl.setText("Stop");
 			buttonstop4 = false;
 			aufnahmeS2 = true;
+			loadArchiveS2.setDisable(true);
 
 		} else if (!buttonstop4) {
 			sensor2AufnahmeKnopf.setText("Start");
 			sensor2AufnahmeKnopftbl.setText("Start");
 			buttonstop4 = true;
 			aufnahmeS2 = false;
+			loadArchiveS2.setDisable(false);
 			db.saveDBSensor2();
-			db.closeConnection();
+
+			if (!db.datalistsensor2.isEmpty()) {
+				addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe @" + timeSavedS2);
+				db.messIDS2++;
+			}
 			db.datalistsensor2.clear();
-
-			addItemsToListView(list2, db.messIDS2.toString() + ". Messreihe @" + timeSavedS2);
-			db.messIDS2++;
-
 		}
 	}
 
