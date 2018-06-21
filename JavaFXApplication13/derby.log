@@ -1,8 +1,15 @@
 ----------------------------------------------------------------
+<<<<<<< HEAD
 Thu Jun 21 16:09:28 CEST 2018:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0164-22ad-b8e8-00000dae86c0 
 on database directory P:\git\API1.02\JavaFXApplication13\MyDB with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
 Loaded from file:/P:/git/API1.02/JavaFXApplication13/lib/derby.jar
+=======
+Thu Jun 21 15:34:20 CEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0164-228d-8e49-00000c7c98c8 
+on database directory P:\Wirtschaftsinformatik\2.Semester\Wi-Inf-Projekt\API1.0\JavaFXApplication13\MyDB with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
+Loaded from file:/P:/Wirtschaftsinformatik/2.Semester/Wi-Inf-Projekt/API1.0/JavaFXApplication13/lib/derby.jar
+>>>>>>> branch 'master' of https://github.com/E-Corp88/API1.0.git
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_151-b12
 user.dir=P:\git\API1.02\JavaFXApplication13

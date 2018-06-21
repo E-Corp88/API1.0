@@ -65,7 +65,7 @@ public class InitSensor2 implements CeBarRoundObserver<SensorEvent> {
 
 	}
 
-	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, Date date,
+	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, String date,
 			String typecode, long id) {
 		EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
 		if (datalist.size() <= 1000) {

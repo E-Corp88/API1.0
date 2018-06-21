@@ -121,7 +121,7 @@ public class DB {
 			if (!datalistsensor2.isEmpty()) {
 				for (int x = 0; x < datalistsensor2.size(); x++) {
 					PreparedStatement ps = c.prepareStatement(
-							"INSERT INTO ECORP.SENSOR2 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID,MESSIDNR) VALUES(?,?,?,?,?,?)");
+							"INSERT INTO ECORP.SENSOR2 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID) VALUES(?,?,?,?,?,?)");
 
 					ps.setString(1, String.valueOf(datalistsensor2.get(x).getTemp()));
 					ps.setString(2, String.valueOf(datalistsensor2.get(x).getPressure()));
