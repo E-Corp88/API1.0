@@ -14,243 +14,317 @@ import de.hft.wiinf.ss.ecorp.consumer.InitSensor1;
 import de.hft.wiinf.ss.ecorp.controller.FXMLDocumentController;
 import de.hft.wiinf.ss.ecorp.event.EventDTO;
 
+/**
+ *
+ * @author User
+ */
 public class DB {
 
-	public ArrayList<EventDTO> datalistsensor1 = new ArrayList<>();
-	public ArrayList<EventDTO> datalistsensor2 = new ArrayList<>();
+    /**
+     *
+     */
+    public ArrayList<EventDTO> datalistsensor1 = new ArrayList<>();
 
-	// lists filled with data from sensor1 out of the db
-	public ArrayList<Double> tempValuesS1 = new ArrayList<>();
-	public ArrayList<Double> presValuesS1 = new ArrayList<>();
-	public ArrayList<Integer> revValuesS1 = new ArrayList<>();
-	public ArrayList<String> timeValuesS1 = new ArrayList<>();
+    /**
+     *
+     */
+    public ArrayList<EventDTO> datalistsensor2 = new ArrayList<>();
 
-	// lists filled with data from sensor2 out of the db
-	public ArrayList<Double> tempValuesS2 = new ArrayList<>();
-	public ArrayList<Double> presValuesS2 = new ArrayList<>();
-	public ArrayList<Integer> revValuesS2 = new ArrayList<>();
-	public ArrayList<String> timeValuesS2 = new ArrayList<>();
+    /**
+     * List filled with temperature data from sensor1 out of the db
+     */
+    public ArrayList<Double> tempValuesS1 = new ArrayList<>();
 
-	// counter for measurement series
-	public Integer messIDS1 = 1;
-	public Integer messIDS2 = 1;
+    /**
+     * List filled with pressure data from sensor1 out of the db
+     */
+    public ArrayList<Double> presValuesS1 = new ArrayList<>();
 
-	Connection c;
+    /**
+     * List filled with revolution data from sensor1 out of the db
+     */
+    public ArrayList<Integer> revValuesS1 = new ArrayList<>();
 
-	public DB() {
-		loadDatabaseDriver();
-		establishConnection();
+    /**
+     * List filled with time data from sensor1 out of the db
+     */
+    public ArrayList<String> timeValuesS1 = new ArrayList<>();
 
-	}
+    /**
+     * List filled with temperature data from sensor1 out of the db
+     */
+    public ArrayList<Double> tempValuesS2 = new ArrayList<>();
 
-	private void establishConnection() {
-		try {
-			c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    /**
+     * List filled with pressure data from sensor1 out of the db
+     */
+    public ArrayList<Double> presValuesS2 = new ArrayList<>();
 
-	// comment!
-	public void saveDBSensor1() {
+    /**
+     * List filled with revoltuion data from sensor1 out of the db
+     */
+    public ArrayList<Integer> revValuesS2 = new ArrayList<>();
 
-		try {
+    /**
+     * List filled with time data from sensor1 out of the db
+     */
+    public ArrayList<String> timeValuesS2 = new ArrayList<>();
 
-			Statement s = c.createStatement();
+    /**
+     * Counter for measurement series
+     */
+    public Integer messIDS1 = 1;
 
-			try {
-				s.executeUpdate("CREATE SCHEMA ECORP");
-			} catch (SQLException e) {
-			}
+    /**
+     * Counter for measurement series
+     */
+    public Integer messIDS2 = 1;
 
-			try {
-				s.executeUpdate(
-						"CREATE TABLE ECORP.SENSOR1 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30))");
-			} catch (SQLException e) {
-			}
+    Connection c;
 
-			if (!datalistsensor1.isEmpty()) {
-				for (int x = 0; x < datalistsensor1.size(); x++) {
-					PreparedStatement ps = c.prepareStatement(
-							"INSERT INTO ECORP.SENSOR1 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID) VALUES(?,?,?,?,?,?)");
+    /**
+     *
+     */
+    public DB() {
+        loadDatabaseDriver();
+        establishConnection();
 
-					ps.setString(1, String.valueOf(datalistsensor1.get(x).getTemp()));
-					ps.setString(2, String.valueOf(datalistsensor1.get(x).getPressure()));
-					ps.setString(3, String.valueOf(datalistsensor1.get(x).getRev()));
-					ps.setString(4, (datalistsensor1.get(x).getDate().toString()));
-					ps.setString(5, String.valueOf(datalistsensor1.get(x).getTypecode()));
-					ps.setString(6, messIDS1.toString());
-					ps.executeUpdate();
-				}
-			}
+    }
 
-		} catch (
+    private void establishConnection() {
+        try {
+            c = DriverManager.getConnection("jdbc:derby:MyDB;create=TRUE", "ecorp", "ecorp");
+        } catch (SQLException e) {
 
-		SQLException e) {
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
+    }
 
-	}
+    /**
+     * This method saves data from sensor1 into database
+     */
+    public void saveDBSensor1() {
 
-	private void loadDatabaseDriver() {
-		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-    
-	public void saveDBSensor2() {
+        try {
 
-		try {
+            Statement s = c.createStatement();
 
-			Statement s = c.createStatement();
+            try {
+                s.executeUpdate("CREATE SCHEMA ECORP");
+            } catch (SQLException e) {
+            }
 
-			try {
-				s.executeUpdate("CREATE SCHEMA ECORP");
-			} catch (SQLException e) {
-			}
+            try {
+                s.executeUpdate(
+                        "CREATE TABLE ECORP.SENSOR1 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30))");
+            } catch (SQLException e) {
+            }
 
-			try {
-				s.executeUpdate(
-						"CREATE TABLE ECORP.SENSOR2 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30))");
-			} catch (SQLException e) {
-			}
+            if (!datalistsensor1.isEmpty()) {
+                for (int x = 0; x < datalistsensor1.size(); x++) {
+                    PreparedStatement ps = c.prepareStatement(
+                            "INSERT INTO ECORP.SENSOR1 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID) VALUES(?,?,?,?,?,?)");
 
-			if (!datalistsensor2.isEmpty()) {
-				for (int x = 0; x < datalistsensor2.size(); x++) {
-					PreparedStatement ps = c.prepareStatement(
-							"INSERT INTO ECORP.SENSOR2 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID) VALUES(?,?,?,?,?,?)");
+                    ps.setString(1, String.valueOf(datalistsensor1.get(x).getTemp()));
+                    ps.setString(2, String.valueOf(datalistsensor1.get(x).getPressure()));
+                    ps.setString(3, String.valueOf(datalistsensor1.get(x).getRev()));
+                    ps.setString(4, (datalistsensor1.get(x).getDate().toString()));
+                    ps.setString(5, String.valueOf(datalistsensor1.get(x).getTypecode()));
+                    ps.setString(6, messIDS1.toString());
+                    ps.executeUpdate();
+                }
+            }
 
-					ps.setString(1, String.valueOf(datalistsensor2.get(x).getTemp()));
-					ps.setString(2, String.valueOf(datalistsensor2.get(x).getPressure()));
-					ps.setString(3, String.valueOf(datalistsensor2.get(x).getRev()));
-					ps.setString(4, (datalistsensor2.get(x).getDate().toString()));
-					ps.setString(5, String.valueOf(datalistsensor2.get(x).getTypecode()));
-					ps.setString(6, messIDS2.toString());
-					ps.executeUpdate();
-				}
-			}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		} catch (
+    }
 
-		SQLException e) {
-			e.printStackTrace();
-		}
+    private void loadDatabaseDriver() {
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-	}
+    /**
+     * This method saves data from sensor2 into database
+     */
+    public void saveDBSensor2() {
 
-	public void getArchiveS1(ArrayList<String> list, ArrayList<String> time) {
+        try {
 
-		try {
+            Statement s = c.createStatement();
 
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR1");
-			while (rs.next()) {
-				list.add(rs.getString(1));
-				time.add(rs.getString(2));
+            try {
+                s.executeUpdate("CREATE SCHEMA ECORP");
+            } catch (SQLException e) {
+            }
 
-			}
-			rs.close();
+            try {
+                s.executeUpdate(
+                        "CREATE TABLE ECORP.SENSOR2 (TEMPERATUR VARCHAR(30), DRUCK VARCHAR(30), UMDREHUNG VARCHAR(30), TIME VARCHAR(30), TYPECODE VARCHAR(50), MESSID VARCHAR(30))");
+            } catch (SQLException e) {
+            }
 
-		} catch (SQLException e) {
-		}
-	}
+            if (!datalistsensor2.isEmpty()) {
+                for (int x = 0; x < datalistsensor2.size(); x++) {
+                    PreparedStatement ps = c.prepareStatement(
+                            "INSERT INTO ECORP.SENSOR2 (TEMPERATUR,DRUCK,UMDREHUNG,TIME,TYPECODE,MESSID) VALUES(?,?,?,?,?,?)");
 
-	public void getArchiveS2(ArrayList<String> list, ArrayList<String> time) {
+                    ps.setString(1, String.valueOf(datalistsensor2.get(x).getTemp()));
+                    ps.setString(2, String.valueOf(datalistsensor2.get(x).getPressure()));
+                    ps.setString(3, String.valueOf(datalistsensor2.get(x).getRev()));
+                    ps.setString(4, (datalistsensor2.get(x).getDate().toString()));
+                    ps.setString(5, String.valueOf(datalistsensor2.get(x).getTypecode()));
+                    ps.setString(6, messIDS2.toString());
+                    ps.executeUpdate();
+                }
+            }
 
-		try {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR2");
-			while (rs.next()) {
-				list.add(rs.getString(1));
-				time.add(rs.getString(2));
+    }
 
-			}
-			rs.close();
+    /**
+     *
+     * @param list
+     * @param time
+     */
+    public void getArchiveS1(ArrayList<String> list, ArrayList<String> time) {
 
-		} catch (SQLException e) {
-		}
-	}
+        try {
 
-	public void loadDBS1(String num) {
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR1");
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                time.add(rs.getString(2));
 
-		try {
+            }
+            rs.close();
 
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery(
-					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
-			while (rs.next()) {
-				tempValuesS1.add(rs.getDouble(1));
-				presValuesS1.add(rs.getDouble(2));
-				revValuesS1.add(rs.getInt(3));
-				timeValuesS1.add(rs.getString(4));
+        } catch (SQLException e) {
+        }
+    }
 
-			}
-			rs.close();
+    /**
+     *
+     * @param list
+     * @param time
+     */
+    public void getArchiveS2(ArrayList<String> list, ArrayList<String> time) {
 
-		} catch (
+        try {
 
-		SQLException e) {
-		}
-	}
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT MESSID,TIME from ECORP.SENSOR2");
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                time.add(rs.getString(2));
 
-	public void loadDBS2(String num) {
+            }
+            rs.close();
 
-		try {
+        } catch (SQLException e) {
+        }
+    }
 
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery(
-					"SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
-			while (rs.next()) {
-				tempValuesS2.add(rs.getDouble(1));
-				presValuesS2.add(rs.getDouble(2));
-				revValuesS2.add(rs.getInt(3));
-				timeValuesS2.add(rs.getString(4));
+    /**
+     * This method loads sensor1 data from the database
+     *
+     * @param num
+     */
+    public void loadDBS1(String num) {
 
-			}
-			rs.close();
+        try {
 
-		} catch (
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery(
+                    "SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
+            while (rs.next()) {
+                tempValuesS1.add(rs.getDouble(1));
+                presValuesS1.add(rs.getDouble(2));
+                revValuesS1.add(rs.getInt(3));
+                timeValuesS1.add(rs.getString(4));
 
-		SQLException e) {
-		}
-	}
+            }
+            rs.close();
 
-	public void deleteDBS1(String num) {
+        } catch (SQLException e) {
+        }
+    }
 
-		try {
-			Statement s = c.createStatement();
-			s.executeUpdate("DELETE from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
-			s.close();
+    /**
+     * This method loads sensor2 data from the database
+     *
+     * @param num
+     */
+    public void loadDBS2(String num) {
 
-		} catch (
+        try {
 
-		SQLException e) {
-		}
-	}
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery(
+                    "SELECT TEMPERATUR,DRUCK,UMDREHUNG,TIME from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
+            while (rs.next()) {
+                tempValuesS2.add(rs.getDouble(1));
+                presValuesS2.add(rs.getDouble(2));
+                revValuesS2.add(rs.getInt(3));
+                timeValuesS2.add(rs.getString(4));
 
-	public void deleteDBS2(String num) {
+            }
+            rs.close();
 
-		try {
-			Statement s = c.createStatement();
-			s.executeUpdate("DELETE from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
+        } catch (SQLException e) {
+        }
+    }
 
-		} catch (
+    /**
+     * This method deletes sensor1 data from the database
+     *
+     * @param num
+     */
+    public void deleteDBS1(String num) {
 
-		SQLException e) {
-		}
-	}
+        try {
+            Statement s = c.createStatement();
+            s.executeUpdate("DELETE from ECORP.SENSOR1 WHERE MESSID=" + "'" + num + "'");
+            s.close();
 
-	public void closeConnection() {
-		try {
-			c.close();
-			System.out.println("connection closed");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (SQLException e) {
+        }
+    }
+
+    /**
+     * This method deletes sensor2 data from the database
+     *
+     * @param num
+     */
+    public void deleteDBS2(String num) {
+
+        try {
+            Statement s = c.createStatement();
+            s.executeUpdate("DELETE from ECORP.SENSOR2 WHERE MESSID=" + "'" + num + "'");
+
+        } catch (SQLException e) {
+        }
+    }
+
+    /**
+     * This method closes the database connection
+     */
+    public void closeConnection() {
+        try {
+            c.close();
+            System.out.println("connection closed");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

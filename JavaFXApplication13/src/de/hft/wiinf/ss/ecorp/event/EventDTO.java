@@ -2,6 +2,10 @@ package de.hft.wiinf.ss.ecorp.event;
 
 import java.util.Date;
 
+/**
+ *
+ * @author User
+ */
 public class EventDTO {
 
 	private double temp = 0;
@@ -11,7 +15,16 @@ public class EventDTO {
 	private String typecode = "";
 	private long id = 0;
 
-	public EventDTO(double temp, double pressure, int rev, String date, String typecode, long id) {
+    /**
+     * 
+     * @param temp current sensor temperature
+     * @param pressure current sensor pressure
+     * @param rev current sensor revolution
+     * @param date current sensor date
+     * @param typecode current sensor typcode
+     * @param id current sensor id
+     */
+    public EventDTO(double temp, double pressure, int rev, String date, String typecode, long id) {
 		this.temp = temp;
 		this.pressure = pressure;
 		this.rev = rev;
@@ -20,27 +33,33 @@ public class EventDTO {
 		this.id = id;
 	}
 
-	public double getTemp() {
+    
+    public double getTemp() {
 		return temp;
 	}
 
-	public double getPressure() {
+    
+    public double getPressure() {
 		return pressure;
 	}
 
-	public int getRev() {
+    
+    public int getRev() {
 		return rev;
 	}
 
-	public String getDate() {
+    
+    public String getDate() {
 		return date;
 	}
 
-	public String getTypecode() {
+    
+    public String getTypecode() {
 		return typecode;
 	}
 
-	public long getId() {
+    
+    public long getId() {
 		return id;
 	}
 

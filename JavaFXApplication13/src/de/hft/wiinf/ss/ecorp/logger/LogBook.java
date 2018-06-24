@@ -11,21 +11,26 @@ import static java.util.logging.Level.ALL;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-
-
+/**
+ *
+ * @author User
+ */
 public class LogBook {
-	// Erzeuge Objekt um ein Logbuch zu formatieren
-
-	public LogBook(Logger root) {
+	
+    /**
+     * formats a filehandler belonging to a given logger
+     * @param root
+     */
+    public LogBook(Logger root) {
 		
 		FileHandler txt = null;
 
 		try {
-			txt = new FileHandler("LogBook.txt");
+			txt = new FileHandler("LookBooks\\LogBook.txt");
 		} catch (IOException | SecurityException ex) {
 			Logger.getLogger(LogBook.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		root.setLevel(ALL);
+		root.setLevel(Level.INFO);
 		txt.setFormatter(new Formatter() {
 			@Override
 			public String format(LogRecord record) {

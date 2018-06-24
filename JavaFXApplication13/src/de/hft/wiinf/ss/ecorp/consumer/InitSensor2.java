@@ -14,63 +14,123 @@ import de.hft.wiinf.ss.ecorp.event.EventDTO;
 
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author User
+ */
 public class InitSensor2 implements CeBarRoundObserver<SensorEvent> {
 
-	private Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	private Executor dataex = Executors.newSingleThreadExecutor();
+    private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private Executor dataex = Executors.newSingleThreadExecutor();
 
-	SensorRegister app = new CeBarRoundDataSensor();
+    SensorRegister app = new CeBarRoundDataSensor();
 
-	public double temp = 0;
-	public double pressure = 0;
-	public int rev = 0;
-	public Date date;
-	public String typecode = "";
-	public long id = 0;
+    /**
+     * Temperatur from sensor2
+     */
+    public double temp = 0;
 
-	public FXMLDocumentController ctrl;
+    /**
+     * Pressure from sensor2
+     */
+    public double pressure = 0;
 
-	public InitSensor2(FXMLDocumentController ctrl) {
-		this.ctrl = ctrl;
-	}
+    /**
+     * Revolution from sensor2
+     */
+    public int rev = 0;
 
-	public void listen() {
+    /**
+     * Date to resulting sensor data
+     */
+    public Date date;
 
-		app.addListener(this);
-	}
+    /**
+     * Typcode from sensor2
+     */
+    public String typecode = "";
 
-	public void startMeasure() {
-		app.startMeasure();
-	}
+    /**
+     * Unique sensorID from sensor2
+     */
+    public long id = 0;
 
-	public void stopMeasure() {
-		app.stopMeasure();
-	}
+    public FXMLDocumentController ctrl;
 
-	public void setVerbosity(double t) {
-		app.setVerbosity(t);
-	}
+    /**
+     *
+     * @param ctrl
+     */
+    public InitSensor2(FXMLDocumentController ctrl) {
+        this.ctrl = ctrl;
+    }
 
-	@Override
-	public void sensorDataEventListener(SensorEvent event) {
-		dataex.execute(() -> {
-			temp = event.getTemperature();
-			pressure = event.getPressure();
-			rev = event.getRevolutions();
-			date = event.getDate();
-			typecode = event.getSensorTypeCode();
-			id = event.getUniqueSensorIdentifier();
-			ctrl.dataChangedS2();
-		});
+    /**
+     * This mehtod adds a listener to SensorRegister
+     */
+    public void listen() {
 
-	}
+        app.addListener(this);
+    }
 
-	public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, String date,
-			String typecode, long id) {
-		EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
-		if (datalist.size() <= 1000) {
-			datalist.add(dto);
-		}
-	}
+    /**
+     * This method starts the measure
+     */
+    public void startMeasure() {
+        app.startMeasure();
+    }
+
+    /**
+     * This method stops the measure
+     */
+    public void stopMeasure() {
+        app.stopMeasure();
+    }
+
+    /**
+     * This method sets the verbosity
+     *
+     * @param t time in milliseconds
+     */
+    public void setVerbosity(double t) {
+        app.setVerbosity(t);
+    }
+
+    /**
+     *
+     * @param event event which contains all resulting sensor data
+     */
+    @Override
+    public void sensorDataEventListener(SensorEvent event) {
+        dataex.execute(() -> {
+            temp = event.getTemperature();
+            pressure = event.getPressure();
+            rev = event.getRevolutions();
+            date = event.getDate();
+            typecode = event.getSensorTypeCode();
+            id = event.getUniqueSensorIdentifier();
+            ctrl.dataChangedS2();
+        });
+
+    }
+
+    /**
+     * This method saves 1000 EventDTO objects in a arraylist
+     *
+     * @param datalist list which is needed to contain 1000 Objects
+     * @param temp current temp
+     * @param pressure current pressure
+     * @param rev current revolution
+     * @param date current date
+     * @param typecode sensor typcode
+     * @param id sensor ID
+     */
+    public void saveData(ArrayList<EventDTO> datalist, double temp, double pressure, int rev, String date,
+            String typecode, long id) {
+        EventDTO dto = new EventDTO(temp, pressure, rev, date, typecode, id);
+        if (datalist.size() <= 1000) {
+            datalist.add(dto);
+        }
+    }
 
 }
