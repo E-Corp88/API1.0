@@ -194,7 +194,7 @@ public class FXMLDocumentController implements Initializable {
     private ListView list2;
     ObservableList<String> list2_Items = FXCollections.observableArrayList();
     @FXML
-    public ChoiceBox languageChoice;
+    private ChoiceBox languageChoice;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -296,8 +296,11 @@ public class FXMLDocumentController implements Initializable {
         } catch (IndexOutOfBoundsException e) {
         }
     }
-
-    @SuppressWarnings("unchecked")
+    
+    /**
+     * This method greats a new scene in english. <br>
+     * It shouldn´t been used outside of this programm.
+     */
     public void languageChanged() {
         languageChoice.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             Stage stage = (Stage) languageChoice.getScene().getWindow();
@@ -335,7 +338,10 @@ public class FXMLDocumentController implements Initializable {
         });
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    /**
+     * This method manages the current event values from sensor1. <br>
+     * It shouldn´t been used outside of this programm.
+     */
     public void dataChangedS1() {
         try {
             boader = spinner.getValue();
@@ -377,7 +383,10 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    /**
+     *This method manages the current event values from sensor2. <br>
+     *It shouldn´t been used outside of this programm.
+     */
     public void dataChangedS2() {
 
         boader2 = spinner2.getValue();
@@ -420,26 +429,20 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleButtonActionSensor1ShowData(ActionEvent event) {
 
-        // ((NumberAxis<String>)Sensor1Temp.getXAxis()).setAutoRanging(false);
+       
         if (buttonstop) {
             buttonstop = false;
             sensor1StartKnopf.setText("Stop");
             sensor1StartKnopftbl.setText("Stop");
-
             languageChoice.setDisable(true);
-            loadArchiveS1.setDisable(true);
-
-            // receiving data
+            loadArchiveS1.setDisable(true);         
             sensor.startMeasure();
 
         } else if (!buttonstop) {
             sensor1StartKnopf.setText("Start");
             sensor1StartKnopftbl.setText("Start");
-
             languageChoice.setDisable(false);
-            loadArchiveS1.setDisable(false);
-
-            // Not receiving data anymore
+            loadArchiveS1.setDisable(false);         
             sensor.stopMeasure();
             buttonstop = true;
         }
@@ -741,7 +744,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    @SuppressWarnings("unchecked")
+   
     private void sliderMethode(TextField vos, Slider s, TextField vos1, Slider acs,
             LineChart<String, Number> Sensor1Temp, LineChart<String, Number> Sensor1Pre,
             LineChart<String, Number> Sensor1Re) {
@@ -799,7 +802,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    @SuppressWarnings("unchecked")
+   
     private void sliderMethode2(TextField vos, Slider s, TextField vos1, Slider acs,
             LineChart<String, Number> Sensor2Temp, LineChart<String, Number> Sensor2Pre,
             LineChart<String, Number> Sensor2Re) {
@@ -857,8 +860,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public void createTableS1() {
+  
+    private void createTableS1() {
 
         time1.setResizable(false);
         time1.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
@@ -877,7 +880,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void createTableS2() {
+    private void createTableS2() {
 
         time2.setResizable(false);
         time2.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
@@ -895,7 +898,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void createList(ListView list, ObservableList<String> items) {
+    private void createList(ListView list, ObservableList<String> items) {
         list.setItems(items);
         list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 
@@ -918,18 +921,18 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void addItemsToListView(ListView list, String itemName) {
+    private void addItemsToListView(ListView list, String itemName) {
         list.getItems().add(list.getItems().size(), itemName);
         list.scrollTo(itemName);
         list.edit(list.getItems().size() - 1);
     }
 
-    public void deleteItemsToListView(ListView list) throws NullPointerException {
+    private void deleteItemsToListView(ListView list) throws NullPointerException {
         list.getItems().remove(list.getSelectionModel().getSelectedIndex());
         list.edit(list.getItems().size() - 1);
     }
 
-    public void getSelectedItemS1(ListView list) throws NullPointerException {
+    private void getSelectedItemS1(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -939,7 +942,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void deleteSelectedItemS1(ListView list) throws NullPointerException {
+    private void deleteSelectedItemS1(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -955,7 +958,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void getSelectedItemS2(ListView list) throws NullPointerException {
+    private void getSelectedItemS2(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -965,7 +968,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void deleteSelectedItemS2(ListView list) throws NullPointerException {
+    private void deleteSelectedItemS2(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -981,7 +984,7 @@ public class FXMLDocumentController implements Initializable {
 
     }  
 
-    public void visualiseDataS1() {
+    private void visualiseDataS1() {
 
         for (int x = 0; x < db.tempValuesS1.size(); x++) {
 
@@ -996,7 +999,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void visualiseDataS2() {
+    private void visualiseDataS2() {
 
         for (int x = 0; x < db.tempValuesS2.size(); x++) {
 

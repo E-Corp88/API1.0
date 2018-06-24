@@ -21,12 +21,12 @@ import de.hft.wiinf.ss.ecorp.event.EventDTO;
 public class DB {
 
     /**
-     *
+     * List filled with EventDTO objects from Sensor1
      */
     public ArrayList<EventDTO> datalistsensor1 = new ArrayList<>();
 
     /**
-     *
+     * List filled with EventDTO objects from Sensor2
      */
     public ArrayList<EventDTO> datalistsensor2 = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class DB {
     Connection c;
 
     /**
-     *
+     * Constructer loads Database driver and establish a Connection
      */
     public DB() {
         loadDatabaseDriver();
@@ -191,9 +191,11 @@ public class DB {
     }
 
     /**
+     * This method gets a messID and a Time from Database and puts them into the
+     * two given lists
      *
-     * @param list
-     * @param time
+     * @param list list which should be filled with messID from Sensor1
+     * @param time list which should be filled with time from Sensor1
      */
     public void getArchiveS1(ArrayList<String> list, ArrayList<String> time) {
 
@@ -213,9 +215,11 @@ public class DB {
     }
 
     /**
+     * This method gets a messID and a Time from Database and puts them into the
+     * two given lists
      *
-     * @param list
-     * @param time
+     * @param list list which should be filled with messID from Sensor1
+     * @param time which should be filled with time from Sensor1
      */
     public void getArchiveS2(ArrayList<String> list, ArrayList<String> time) {
 

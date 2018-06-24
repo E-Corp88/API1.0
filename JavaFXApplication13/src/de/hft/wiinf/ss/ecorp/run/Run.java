@@ -44,6 +44,7 @@ public class Run extends Application {
 
 		});
 		stage.setScene(scene);
+                stage.setTitle("ECorp-CeBarRound");
 		stage.show();
 
 	}
