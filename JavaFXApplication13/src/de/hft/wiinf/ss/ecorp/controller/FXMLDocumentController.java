@@ -24,10 +24,8 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -45,7 +43,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -73,7 +70,8 @@ public class FXMLDocumentController implements Initializable {
     DB db = new DB();
     SensorRegister app = new CeBarRoundDataSensor();
     ObservableList<String> languageList = FXCollections.observableArrayList("de", "en");
-    private int accuracy2 = 1000;  
+    @SuppressWarnings("unused")
+	private int accuracy2 = 1000;  
     private boolean buttonstop = true;
     private boolean buttonstop2 = true;
     private boolean buttonstop3 = true;
@@ -81,7 +79,8 @@ public class FXMLDocumentController implements Initializable {
     private boolean aufnahmeS1 = true;
     private boolean aufnahmeS2 = true;
     private static final Logger log = Logger.getLogger("");
-    private LogBook logBook = new LogBook(log);
+    @SuppressWarnings("unused")
+	private LogBook logBook = new LogBook(log);
     @FXML
     private VBox vbox2;
     @FXML
@@ -152,26 +151,37 @@ public class FXMLDocumentController implements Initializable {
     private Button loadArchiveS1;
     @FXML
     private Button loadArchiveS2;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableView tableS1;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableView tableS2;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn time1;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn temp1;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn press1;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn rev1;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn time2;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn temp2;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn press2;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private TableColumn rev2;
+    
     private final ObservableList<Value> tbldataS1 = FXCollections.observableArrayList();
     private final ObservableList<Value> tbldataS2 = FXCollections.observableArrayList();
 
@@ -187,16 +197,19 @@ public class FXMLDocumentController implements Initializable {
     private VBox vbox;
     @FXML
     private MenuItem delete;
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private ListView list1;
     ObservableList<String> list1_Items = FXCollections.observableArrayList();
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private ListView list2;
     ObservableList<String> list2_Items = FXCollections.observableArrayList();
-    @FXML
+    @SuppressWarnings("rawtypes")
+	@FXML
     private ChoiceBox languageChoice;
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (Run.currentLocale == "de") {
@@ -301,7 +314,8 @@ public class FXMLDocumentController implements Initializable {
      * This method greats a new scene in english. <br>
      * It shouldn´t been used outside of this programm.
      */
-    public void languageChanged() {
+    @SuppressWarnings("unchecked")
+	public void languageChanged() {
         languageChoice.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             Stage stage = (Stage) languageChoice.getScene().getWindow();
             if (!buttonstop) {
@@ -323,14 +337,12 @@ public class FXMLDocumentController implements Initializable {
                     try {
                         new Run().startEN(new Stage());
                     } catch (Exception e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 } else if (newValue.toString() == "de") {
                     try {
                         new Run().start(new Stage());
                     } catch (Exception e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -342,7 +354,8 @@ public class FXMLDocumentController implements Initializable {
      * This method manages the current event values from sensor1. <br>
      * It shouldn´t been used outside of this programm.
      */
-    public void dataChangedS1() {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void dataChangedS1() {
         try {
             boader = spinner.getValue();
             SimpleDateFormat sdf = new SimpleDateFormat("MMM d. HH:mm:ss.SS");
@@ -387,7 +400,8 @@ public class FXMLDocumentController implements Initializable {
      *This method manages the current event values from sensor2. <br>
      *It shouldn´t been used outside of this programm.
      */
-    public void dataChangedS2() {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void dataChangedS2() {
 
         boader2 = spinner2.getValue();
         SimpleDateFormat sdf = new SimpleDateFormat("MMM d. HH:mm:ss.SSS");
@@ -745,7 +759,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
    
-    private void sliderMethode(TextField vos, Slider s, TextField vos1, Slider acs,
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void sliderMethode(TextField vos, Slider s, TextField vos1, Slider acs,
             LineChart<String, Number> Sensor1Temp, LineChart<String, Number> Sensor1Pre,
             LineChart<String, Number> Sensor1Re) {
         vos.setText(String.valueOf(s.getValue()));
@@ -781,7 +796,6 @@ public class FXMLDocumentController implements Initializable {
             @Override
             protected Task<String> createTask() {
                 return new Task<String>() {
-                    @SuppressWarnings("unchecked")
                     @Override
                     protected String call() throws Exception {
                         s.valueProperty().addListener(new ChangeListener() {
@@ -803,7 +817,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
    
-    private void sliderMethode2(TextField vos, Slider s, TextField vos1, Slider acs,
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void sliderMethode2(TextField vos, Slider s, TextField vos1, Slider acs,
             LineChart<String, Number> Sensor2Temp, LineChart<String, Number> Sensor2Pre,
             LineChart<String, Number> Sensor2Re) {
         vos.setText(String.valueOf(s.getValue()));
@@ -839,7 +854,6 @@ public class FXMLDocumentController implements Initializable {
             @Override
             protected Task<String> createTask() {
                 return new Task<String>() {
-                    @SuppressWarnings("unchecked")
                     @Override
                     protected String call() throws Exception {
                         s.valueProperty().addListener(new ChangeListener() {
@@ -861,7 +875,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
   
-    private void createTableS1() {
+    @SuppressWarnings("unchecked")
+	private void createTableS1() {
 
         time1.setResizable(false);
         time1.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
@@ -879,8 +894,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private void createTableS2() {
+    @SuppressWarnings("unchecked")
+	private void createTableS2() {
 
         time2.setResizable(false);
         time2.setCellValueFactory(new PropertyValueFactory<Value, String>("time"));
@@ -898,7 +913,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void createList(ListView list, ObservableList<String> items) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void createList(ListView list, ObservableList<String> items) {
         list.setItems(items);
         list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 
@@ -921,18 +937,21 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void addItemsToListView(ListView list, String itemName) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void addItemsToListView(ListView list, String itemName) {
         list.getItems().add(list.getItems().size(), itemName);
         list.scrollTo(itemName);
         list.edit(list.getItems().size() - 1);
     }
 
-    private void deleteItemsToListView(ListView list) throws NullPointerException {
+    @SuppressWarnings("rawtypes")
+	private void deleteItemsToListView(ListView list) throws NullPointerException {
         list.getItems().remove(list.getSelectionModel().getSelectedIndex());
         list.edit(list.getItems().size() - 1);
     }
 
-    private void getSelectedItemS1(ListView list) throws NullPointerException {
+    @SuppressWarnings("rawtypes")
+	private void getSelectedItemS1(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -942,7 +961,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void deleteSelectedItemS1(ListView list) throws NullPointerException {
+    @SuppressWarnings("rawtypes")
+	private void deleteSelectedItemS1(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -958,7 +978,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void getSelectedItemS2(ListView list) throws NullPointerException {
+    @SuppressWarnings("rawtypes")
+	private void getSelectedItemS2(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -968,7 +989,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void deleteSelectedItemS2(ListView list) throws NullPointerException {
+    @SuppressWarnings("rawtypes")
+	private void deleteSelectedItemS2(ListView list) throws NullPointerException {
 
         String s = list.getSelectionModel().getSelectedItem().toString();
 
@@ -984,7 +1006,8 @@ public class FXMLDocumentController implements Initializable {
 
     }  
 
-    private void visualiseDataS1() {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void visualiseDataS1() {
 
         for (int x = 0; x < db.tempValuesS1.size(); x++) {
 
@@ -999,7 +1022,8 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void visualiseDataS2() {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void visualiseDataS2() {
 
         for (int x = 0; x < db.tempValuesS2.size(); x++) {
 

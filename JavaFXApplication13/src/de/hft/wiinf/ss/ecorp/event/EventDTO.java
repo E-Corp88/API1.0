@@ -1,7 +1,5 @@
 package de.hft.wiinf.ss.ecorp.event;
 
-import java.util.Date;
-
 /**
  *
  * @author User

@@ -20,7 +20,8 @@ import java.util.logging.Logger;
  */
 public class InitSensor2 implements CeBarRoundObserver<SensorEvent> {
 
-    private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    @SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Executor dataex = Executors.newSingleThreadExecutor();
 
     SensorRegister app = new CeBarRoundDataSensor();
